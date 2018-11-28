@@ -1,0 +1,79 @@
+
+{% for employee in employees %}
+   <tr>
+       <td>{{ employee.name }}</td>
+       <td>{{ employee.first_name }}</td>
+       <td>
+                    {% if  employee.employee_image %}
+                        <img  src="{{ employee.employee_image.url }}"  class="img-responsive"  style="width: 20px; float: left; margin-right: 10px;">
+                    {% else %}
+                        {% load static %}
+                        <img  src="{% static 'image/default.png' %}"   style="width: 20px; float: left; margin-right: 10px;">
+
+                    {% endif %}
+
+       </td>
+       <td>
+          <!--<form action="{% url 'insurance:delete-employee' employee.id employees.number%}" method="post" style="display: inline;">-->
+          <!--{% csrf_token %}-->
+          <!--<input type="hidden" name="employee_id" value="{{ employee.id }}" />-->
+          <!--<button type="submit" class="btn btn-danger btn-xs">-->
+          <!--<span class="glyphicon glyphicon-trash"></span>&nbsp; Delete-->
+          <!--</button>-->
+          <!--</form>-->
+
+       &nbsp;&nbsp;
+          <a href="{% url 'insurance:detail-employee' employee.id %}">
+          <button  class="btn btn-primary btn-xs">
+          <span class="glyphicon glyphicon-eye-open "></span>&nbsp; Detail
+          </button>
+          </a>
+
+          <a href="{% url 'insurance:update-employee' employee.id %}">
+          <button  class="btn btn-warning btn-xs">
+          <span class="glyphicon glyphicon-pencil "></span>&nbsp; Edit &nbsp;&nbsp;
+          </button>
+          </a>
+
+
+           <button type="button"
+             class="btn btn-danger btn-xs js-delete-employee"
+             data-url="{% url 'insurance:delete-employee' employee.id employees.number %}">
+             <span class="glyphicon glyphicon-trash"></span> Delete
+          </button>
+
+           </td>
+  </tr>
+{% empty %}
+  <tr>
+     <td colspan="7" class="text-center bg-warning">No Employee</td>
+  </tr>
+ {% endfor %}
+
+<div>
+  {% if employees.has_other_pages %}
+                      <ul class="pagination">
+                        {% if employees.has_previous %}
+                          <li><a href="?page={{ employees.previous_page_number }}">&laquo;</a></li>
+                        {% else %}
+                          <li class="disabled"><span>&laquo;</span></li>
+                        {% endif %}
+
+                        {% for i in employees.paginator.page_range %}
+                          {% if employees.number == i %}
+                            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                          {% else %}
+                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                          {% endif %}
+                        {% endfor %}
+
+                        {% if employees.has_next %}
+                          <li><a href="?page={{ employees.next_page_number }}">&raquo;</a></li>
+                        {% else %}
+                          <li class="disabled"><span>&raquo;</span></li>
+                        {% endif %}
+                      </ul>
+                    {% endif %}
+{{employees.number}}
+{{employees.paginator.page_range}}
+</div>

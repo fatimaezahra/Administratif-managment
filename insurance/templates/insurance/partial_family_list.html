@@ -1,0 +1,30 @@
+  {% for family in employee.family_set.all %}
+  <tr>
+      <td>{{ family.name}} {{ family.first_name }}</td>
+      <td>{{ family.relation }}</td>
+      <td>
+      <!--<form action="{% url 'insurance:delete-family' employee.id family.id %}" method="post" style="display: inline;">-->
+          <!--{% csrf_token %}-->
+          <!--<input type="hidden" name="family_id" value="{{ family.id }}" />-->
+          <!--<button type="submit" class="btn btn-danger btn-xs">-->
+              <!--<span class="glyphicon glyphicon-remove"></span>&nbsp; Delete-->
+          <!--</button>-->
+      <!--</form>-->
+
+          <button type="button"
+              class="btn btn-warning btn-xs js-update-family"
+              data-url="{% url 'insurance:update-family'  employee.id family.id %}">
+            <span class="glyphicon glyphicon-pencil"></span> Edit &nbsp;&nbsp;
+          </button>
+          <button type="button"
+              class="btn btn-danger btn-xs js-delete-family"
+              data-url="{% url 'insurance:delete-family' employee.id family.id %}">
+              <span class="glyphicon glyphicon-trash"></span> Delete
+          </button>
+      </td>
+  </tr>
+  {% empty %}
+       <tr>
+           <td colspan="7" class="text-center bg-warning">No Family</td>
+       </tr>
+  {% endfor %}

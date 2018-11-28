@@ -1,0 +1,83 @@
+{% extends 'insurance/base.html' %}
+{% block title %}All Employees{% endblock %}
+{% block employees_active %}active{% endblock %}
+
+{% load static %}
+{% block javascript %}
+  <script src="{% static 'insurance/employee.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid songs-container">
+    <div class="row">
+        <div class="col-sm-12" style="margin-bottom: 10px;">
+
+                <a href="{% url 'insurance:create-employee' %}" >
+                    <button class="btn btn-primary">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;New Employee
+                    </button>
+                </a>
+
+
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-12">
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table" id="employee-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>First Name</th>
+                                <th>Image</th>
+                                <th>Actions</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% include 'insurance/partial_employee_list.html' %}
+                        </tbody>
+                    </table>
+                    <!--{% if employees.has_other_pages %}-->
+                      <!--<ul class="pagination">-->
+                        <!--{% if employees.has_previous %}-->
+                          <!--<li><a href="?page={{ employees.previous_page_number }}">&laquo;</a></li>-->
+                        <!--{% else %}-->
+                          <!--<li class="disabled"><span>&laquo;</span></li>-->
+                        <!--{% endif %}-->
+                        <!--{% for i in employees.paginator.page_range %}-->
+                          <!--{% if employees.number == i %}-->
+                            <!--<li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>-->
+                          <!--{% else %}-->
+                            <!--<li><a href="?page={{ i }}">{{ i }}</a></li>-->
+                          <!--{% endif %}-->
+                        <!--{% endfor %}-->
+                        <!--{% if employees.has_next %}-->
+                          <!--<li><a href="?page={{ employees.next_page_number }}">&raquo;</a></li>-->
+                        <!--{% else %}-->
+                          <!--<li class="disabled"><span>&raquo;</span></li>-->
+                        <!--{% endif %}-->
+                      <!--</ul>-->
+                    <!--{% endif %}-->
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal fade" id="modal-employee">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      </div>
+    </div>
+</div>
+
+{% endblock %}
