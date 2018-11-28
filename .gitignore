@@ -25,10 +25,10 @@ staticprod
 todo.rst
 tags
 paramiko.log
-
 /.env
 /.coverage
 .idea/*
 accounts/__pycache__/*
 accounts/migrations/__pycache__/*
 insuranceProject/__pycache__/*
+

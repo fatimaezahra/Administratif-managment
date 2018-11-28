@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'insurance.apps.InsuranceConfig',
     'widget_tweaks',
+
 ]
+
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 LOGIN_REDIRECT_URL = 'home'
