@@ -21,7 +21,7 @@ class Employee(Person):
 
 
 class Family(Person):
-    PARENTAL_RELATION = (('Girl', 'girl'), ('Son', 'son'))
+    PARENTAL_RELATION = (('Daughter', 'daughter'), ('Son', 'son'))
     relation = models.CharField(choices=PARENTAL_RELATION, max_length=25)
     employee_relation = models.ForeignKey('Employee',on_delete=models.CASCADE)
 
@@ -33,16 +33,12 @@ class FileInsurance(models.Model):
     stat = models.CharField(choices=(('e','encoure'),('t','terminer')),max_length=20,blank=True)
     collaborator = models.ForeignKey('Employee',on_delete=models.CASCADE,related_name='collaborator',blank=True,null=True)
     Patient = models.ForeignKey('Family',on_delete=models.CASCADE,related_name='patient',blank=True,null=True)
+    file_number = models.IntegerField(default=1)
+    reimbursement_date = models.DateField(null=True)
+    amount = models.BooleanField()
+    regulation_number = models.IntegerField(null=True)
+    method_settlement = models.CharField(max_length=60, null=True)
 
     def __str__(self):
         return str(self.pk)
-
-
-class ResponseInsurance(models.Model):
-    file_number = models.IntegerField()
-    reimbursement_date = models.DateField()
-    amount = models.BooleanField()
-    regulation_number = models.IntegerField()
-    method_settlement = models.CharField(max_length=60)
-    file_insurance = models.OneToOneField(FileInsurance,on_delete=models.CASCADE)
 
