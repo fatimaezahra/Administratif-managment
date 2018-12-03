@@ -40,7 +40,6 @@ def update_employee(request, pk):
     return render(request,'insurance/update_employee.html',{'form': form,})
 
 
-
 def delete_employee(request, pk, page):
     if not request.user.is_authenticated:
         return redirect('accounts:login_user')
@@ -61,8 +60,6 @@ def delete_employee(request, pk, page):
             employees = paginator.page(page)
         except EmptyPage:
             employees = paginator.page(paginator.num_pages)
-        print(page)
-        print(employees.number)
         employees.number = page
         data['form_is_valid'] = True  # This is just to play along with the existing code
         data['html_employee_list'] = render_to_string('insurance/partial_employee_list.html', {
@@ -78,7 +75,6 @@ def delete_employee(request, pk, page):
 
 
 def list_employee(request):
-    print(type(request.user).__name__)
     if not request.user.is_authenticated:
         return redirect('accounts:login_user')
     employee_list = Employee.objects.all()
