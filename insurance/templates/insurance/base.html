@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Viberr{% endblock %}</title>
+    <title>{% block title %}Insurance{% endblock %}</title>
     {% load staticfiles %}
     <link rel="shortcut icon" type="image/png" href="{%  static 'favicon.ico' %}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -24,18 +24,22 @@
                 <!--<span class="icon-bar"></span>-->
                 <!--<span class="icon-bar"></span>-->
             <!--</button>-->
-            <a class="navbar-brand" href="#">Insurance</a>
+            <a class="navbar-brand" href="#" style="pointer-events: none; cursor: default;">Insurance</a>
         </div>
 
         <!-- Items -->
         <div class="collapse navbar-collapse" id="topNavBar">
             <ul class="nav navbar-nav">
+                {% if user.is_admin %}
+                <li class="{% block relations_active %}{% endblock %}"><a href="{% url 'insurance:list-relation' %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span>&nbsp;</a></li>
+                <li class="{% block users_active %}{% endblock %}"><a href="{% url 'accounts:list_user' %}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp; Users</a></li>
+                {% endif %}
                 <li class="{% block employees_active %}{% endblock %}"><a href="{% url 'insurance:list-employee' %}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp; Employees</a></li>
                 <li class="{% block insurances_active %}{% endblock %}"><a href="#"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp; Files Insurance</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li >
-                    <a style="pointer-events: none; cursor: default;">
+                    <a href="{% url 'accounts:update_my_profile'%}">
                         Hi  {{ user.username}}&nbsp;
                     </a>
                 </li>
