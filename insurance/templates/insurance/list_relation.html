@@ -1,0 +1,62 @@
+{% extends 'insurance/base.html' %}
+{% block title %}All Relations{% endblock %}
+{% block relations_active %}active{% endblock %}
+
+{% load static %}
+{% block javascript %}
+  <script src="{% static 'insurance/relation.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid songs-container">
+    <div class="row">
+        <div class="col-sm-12" style="margin-bottom: 10px;">
+
+                <button type="button"
+                        class="btn btn-primary js-create-relation"
+                        data-url="{% url 'insurance:create-relation' %}">
+                  <span class="glyphicon glyphicon-plus"></span>
+                  Add New Relation
+                </button>
+
+
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-6">
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table" id="relation-table">
+                        <thead>
+                            <tr>
+                                <th>Relation</th>
+                                <th>Actions</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% include 'insurance/partial_relation_list.html' %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal fade" id="modal-relation">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      </div>
+    </div>
+</div>
+
+{% endblock %}

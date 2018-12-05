@@ -1,0 +1,23 @@
+{% for relation in relations %}
+   <tr>
+       <td>{{ relation.parental_relation }}</td>
+       <td>
+           <button type="button"
+              class="btn btn-warning btn-xs js-update-relation"
+              data-url="{% url 'insurance:update-relation'  relation.id %}">
+            <span class="glyphicon glyphicon-pencil"></span> Edit &nbsp;&nbsp;
+          </button>
+
+           <button type="button"
+             class="btn btn-danger btn-xs js-delete-relation"
+             data-url="{% url 'insurance:delete-relation' relation.id  %}">
+             <span class="glyphicon glyphicon-trash"></span> Delete
+          </button>
+
+           </td>
+  </tr>
+{% empty %}
+  <tr>
+     <td colspan="7" class="text-center bg-warning">No Ralation</td>
+  </tr>
+ {% endfor %}
