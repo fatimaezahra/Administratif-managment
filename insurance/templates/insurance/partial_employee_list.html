@@ -14,15 +14,6 @@
 
        </td>
        <td>
-          <!--<form action="{% url 'insurance:delete-employee' employee.id employees.number%}" method="post" style="display: inline;">-->
-          <!--{% csrf_token %}-->
-          <!--<input type="hidden" name="employee_id" value="{{ employee.id }}" />-->
-          <!--<button type="submit" class="btn btn-danger btn-xs">-->
-          <!--<span class="glyphicon glyphicon-trash"></span>&nbsp; Delete-->
-          <!--</button>-->
-          <!--</form>-->
-
-       &nbsp;&nbsp;
           <a href="{% url 'insurance:detail-employee' employee.id %}">
           <button  class="btn btn-primary btn-xs">
           <span class="glyphicon glyphicon-eye-open "></span>&nbsp; Detail
@@ -74,6 +65,4 @@
                         {% endif %}
                       </ul>
                     {% endif %}
-{{employees.number}}
-{{employees.paginator.page_range}}
 </div>

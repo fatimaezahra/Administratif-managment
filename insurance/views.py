@@ -3,42 +3,48 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template.loader import render_to_string
 
-from insurance.forms import EmployeeForm, FamilyForm
-from insurance.models import Employee, Family
-
+from insurance.forms import EmployeeForm, FamilyForm, RelationForm
+from insurance.models import Employee, Family, Relation
 
 
 def detail_employee(request, pk):
     if not request.user.is_authenticated:
         return redirect('accounts:login_user')
     employee = get_object_or_404(Employee, pk=pk)
-    return render(request, 'insurance/detail_employee.html', {'employee': employee,})
+    return render(request, 'insurance/detail_employee.html',
+                  {'employee': employee, })
 
 
 def create_employee(request):
     if not request.user.is_authenticated:
         return redirect('accounts:login_user')
     form = EmployeeForm(request.POST or None, request.FILES or None)
+    if "cancel" in request.POST:
+        return redirect('insurance:list-employee')
+
     if form.is_valid():
         employee = form.save(commit=False)
         employee.save()
         return redirect('insurance:list-employee')
-    return render(request, 'insurance/create_employee.html', {"form": form,})
+    return render(request, 'insurance/create_employee.html', {"form": form, })
 
 
 def update_employee(request, pk):
     if not request.user.is_authenticated:
         return redirect('accounts:login_user')
     employee = get_object_or_404(Employee, pk=pk)
-    form = EmployeeForm(request.POST or None, request.FILES or None, instance=employee)
+    form = EmployeeForm(request.POST or None, request.FILES or None,
+                        instance=employee)
+    if "cancel" in request.POST:
+        return redirect('insurance:list-employee')
+
     if request.method == 'POST':
         if form.is_valid():
             employee.save()
             return redirect('insurance:list-employee')
     else:
         form = EmployeeForm(instance=employee)
-    return render(request,'insurance/update_employee.html',{'form': form,})
-
+    return render(request, 'insurance/update_employee.html', {'form': form, })
 
 def delete_employee(request, pk, page):
     if not request.user.is_authenticated:
@@ -104,7 +110,7 @@ def save_family_form(request, form, employee, template_name):
             })
         else:
             data['form_is_valid'] = False
-    context = {'form': form,'employee':employee}
+    context = {'form': form, 'employee': employee}
     data['html_form'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
 
@@ -145,12 +151,72 @@ def delete_family(request, pk, pk2):
             'employee': employee
         })
     else:
-        context = {'family': family,'employee': employee}
-        data['html_form'] = render_to_string('insurance/partial_family_delete.html',
-            context,
-            request=request,
-        )
+        context = {'family': family, 'employee': employee}
+        data['html_form'] = render_to_string('insurance/partial_family_delete.html', context, request=request, )
     return JsonResponse(data)
 
 
+def list_relation(request):
+    if not request.user.is_authenticated:
+        return redirect('accounts:login_user')
+    relations = Relation.objects.all()
+    return render(request, 'insurance/list_relation.html', {
+        'relations': relations,
+    })
+
+
+def save_relation_form(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            relation = form.save(commit=False)
+            relation.save()
+            data['form_is_valid'] = True
+            relations = Relation.objects.all()
+            data['html_relation_list'] = render_to_string('insurance/partial_relation_list.html',
+                                                          {'relations': relations})
+        else:
+            data['form_is_valid'] = False
+    context = {'form': form, }
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+
+
+def create_relation(request):
+    if not request.user.is_authenticated:
+        return redirect('accounts:login_user')
+    if request.method == 'POST':
+        form = RelationForm(request.POST or None, request.FILES or None)
+    else:
+        form = RelationForm()
+    return save_relation_form(request, form, 'insurance/partial_relation_create.html')
+
+
+def update_relation(request, pk):
+    if not request.user.is_authenticated:
+        return redirect('accounts:login_user')
+    relation = get_object_or_404(Relation, pk=pk)
+    if request.method == 'POST':
+        form = RelationForm(request.POST or None, request.FILES or None, instance=relation)
+    else:
+        form = RelationForm(instance=relation)
+    return save_relation_form(request, form, 'insurance/partial_relation_update.html')
+
+
+def delete_relation(request, pk):
+    if not request.user.is_authenticated:
+        return redirect('accounts:login_user')
+    relation = get_object_or_404(Relation, pk=pk)
+    data = dict()
+    if request.method == 'POST':
+        relation.delete()
+        data['form_is_valid'] = True
+        relations = Relation.objects.all()
+        data['html_relation_list'] = render_to_string('insurance/partial_relation_list.html', {
+            'relations': relations
+        })
+    else:
+        context = {'relation': relation, }
+        data['html_form'] = render_to_string('insurance/partial_relation_delete.html', context, request=request, )
+    return JsonResponse(data)
 
