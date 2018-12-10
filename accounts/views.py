@@ -1,12 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth import logout, authenticate, login, update_session_auth_hash
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm, AdminPasswordChangeForm
-from django.contrib.auth.hashers import make_password, check_password
-from django.core.paginator import PageNotAnInteger, EmptyPage, Paginator
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 
+from accounts.decorators import admin_required
 from accounts.forms import CustomUserCreationForm, CustomUserChangeForm, CustomUserChangeAdminForm
 from accounts.models import CustomUser
 
@@ -21,6 +21,8 @@ def logout_user(request):
 
 
 def login_user(request):
+    if request.user.is_authenticated:
+        return redirect('insurance:list-employee')
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
@@ -38,9 +40,9 @@ def login_user(request):
     return render(request, 'accounts/login.html')
 
 
+@login_required
+@admin_required
 def register(request):
-    if not request.user.is_authenticated:
-        return redirect('accounts:login_user')
     form = CustomUserCreationForm(request.POST or None, request.FILES or None)
     if request.method == 'POST':
         if form.is_valid():
@@ -59,9 +61,10 @@ def register(request):
     return render(request, 'accounts/register.html', context)
 
 
+@login_required
 def update_my_profile(request):
-    if not request.user.is_authenticated:
-        return redirect('accounts:login_user')
+    # if not request.user.is_authenticated:
+    #     return redirect('accounts:login_user')
     if "cancel" in request.POST:
         return redirect('insurance:list-employee')
     user = get_object_or_404(CustomUser, pk=request.user.id)
@@ -78,10 +81,11 @@ def update_my_profile(request):
     return render(request, 'accounts/update_my_profile.html',{'form': form, })
 
 
+@login_required
+@admin_required
 def list_user(request):
-    if not request.user.is_authenticated:
-        return redirect('accounts:login_user')
-
+    # if not request.user.is_authenticated:
+    #     return redirect('accounts:login_user')
     # if not request.user.is_admin:
     #     return redirect('insurance:list-employee')
 
@@ -92,13 +96,9 @@ def list_user(request):
     })
 
 
+@login_required
+@admin_required
 def update_user(request, pk):
-    if not request.user.is_authenticated:
-        return redirect('accounts:login_user')
-
-    if not request.user.is_admin:
-        return redirect('insurance:list-employee')
-
     if "cancel" in request.POST:
         return redirect('accounts:list_user')
 
@@ -114,9 +114,9 @@ def update_user(request, pk):
     return render(request, 'accounts/register.html', {'form': form, })
 
 
+@login_required
+@admin_required
 def delete_user(request, pk):
-    if not request.user.is_authenticated:
-        return redirect('accounts:login_user')
 
     user = get_object_or_404(CustomUser, pk=pk)
     data = dict()
@@ -135,6 +135,7 @@ def delete_user(request, pk):
     return JsonResponse(data)
 
 
+@login_required
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
@@ -152,6 +153,8 @@ def change_password(request):
     })
 
 
+@login_required
+@admin_required
 def admin_change_password(request, pk):
     user_change = get_object_or_404(CustomUser, pk=pk)
     if request.method == 'POST':

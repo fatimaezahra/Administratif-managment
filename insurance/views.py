@@ -1,23 +1,23 @@
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template.loader import render_to_string
 
+from accounts.decorators import admin_required
 from insurance.forms import EmployeeForm, FamilyForm, RelationForm
 from insurance.models import Employee, Family, Relation
 
 
+@login_required
 def detail_employee(request, pk):
-    if not request.user.is_authenticated:
-        return redirect('accounts:login_user')
     employee = get_object_or_404(Employee, pk=pk)
     return render(request, 'insurance/detail_employee.html',
                   {'employee': employee, })
 
 
+@login_required
 def create_employee(request):
-    if not request.user.is_authenticated:
-        return redirect('accounts:login_user')
     form = EmployeeForm(request.POST or None, request.FILES or None)
     if "cancel" in request.POST:
         return redirect('insurance:list-employee')
@@ -29,9 +29,8 @@ def create_employee(request):
     return render(request, 'insurance/create_employee.html', {"form": form, })
 
 
+@login_required
 def update_employee(request, pk):
-    if not request.user.is_authenticated:
-        return redirect('accounts:login_user')
     employee = get_object_or_404(Employee, pk=pk)
     form = EmployeeForm(request.POST or None, request.FILES or None,
                         instance=employee)
@@ -46,9 +45,9 @@ def update_employee(request, pk):
         form = EmployeeForm(instance=employee)
     return render(request, 'insurance/update_employee.html', {'form': form, })
 
+
+@login_required
 def delete_employee(request, pk, page):
-    if not request.user.is_authenticated:
-        return redirect('accounts:login_user')
     employee = get_object_or_404(Employee, pk=pk)
     data = dict()
     if request.method == 'POST':
@@ -80,9 +79,8 @@ def delete_employee(request, pk, page):
     return JsonResponse(data)
 
 
+@login_required
 def list_employee(request):
-    if not request.user.is_authenticated:
-        return redirect('accounts:login_user')
     employee_list = Employee.objects.all()
     page = request.GET.get('page', 1)
     paginator = Paginator(employee_list, 4)
@@ -115,9 +113,8 @@ def save_family_form(request, form, employee, template_name):
     return JsonResponse(data)
 
 
+@login_required
 def create_family(request, pk):
-    if not request.user.is_authenticated:
-        return redirect('accounts:login_user')
     employee = get_object_or_404(Employee, pk=pk)
     if request.method == 'POST':
         form = FamilyForm(request.POST or None, request.FILES or None)
@@ -126,9 +123,8 @@ def create_family(request, pk):
     return save_family_form(request, form, employee, 'insurance/partial_family_create.html')
 
 
+@login_required
 def update_family(request, pk, pk2):
-    if not request.user.is_authenticated:
-        return redirect('accounts:login_user')
     employee = get_object_or_404(Employee, pk=pk)
     family = get_object_or_404(Family, pk=pk2)
     if request.method == 'POST':
@@ -138,9 +134,8 @@ def update_family(request, pk, pk2):
     return save_family_form(request, form, employee, 'insurance/partial_family_update.html')
 
 
+@login_required
 def delete_family(request, pk, pk2):
-    if not request.user.is_authenticated:
-        return redirect('accounts:login_user')
     employee = get_object_or_404(Employee, pk=pk)
     family = get_object_or_404(Family, pk=pk2)
     data = dict()
@@ -156,9 +151,9 @@ def delete_family(request, pk, pk2):
     return JsonResponse(data)
 
 
+@login_required
+@admin_required
 def list_relation(request):
-    if not request.user.is_authenticated:
-        return redirect('accounts:login_user')
     relations = Relation.objects.all()
     return render(request, 'insurance/list_relation.html', {
         'relations': relations,
@@ -182,9 +177,9 @@ def save_relation_form(request, form, template_name):
     return JsonResponse(data)
 
 
+@login_required
+@admin_required
 def create_relation(request):
-    if not request.user.is_authenticated:
-        return redirect('accounts:login_user')
     if request.method == 'POST':
         form = RelationForm(request.POST or None, request.FILES or None)
     else:
@@ -192,9 +187,9 @@ def create_relation(request):
     return save_relation_form(request, form, 'insurance/partial_relation_create.html')
 
 
+@login_required
+@admin_required
 def update_relation(request, pk):
-    if not request.user.is_authenticated:
-        return redirect('accounts:login_user')
     relation = get_object_or_404(Relation, pk=pk)
     if request.method == 'POST':
         form = RelationForm(request.POST or None, request.FILES or None, instance=relation)
@@ -203,9 +198,9 @@ def update_relation(request, pk):
     return save_relation_form(request, form, 'insurance/partial_relation_update.html')
 
 
+@login_required
+@admin_required
 def delete_relation(request, pk):
-    if not request.user.is_authenticated:
-        return redirect('accounts:login_user')
     relation = get_object_or_404(Relation, pk=pk)
     data = dict()
     if request.method == 'POST':
@@ -219,4 +214,3 @@ def delete_relation(request, pk):
         context = {'relation': relation, }
         data['html_form'] = render_to_string('insurance/partial_relation_delete.html', context, request=request, )
     return JsonResponse(data)
-

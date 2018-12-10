@@ -45,8 +45,11 @@ INSTALLED_APPS = [
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'login'
+LOGIN_REDIRECT_URL = 'insurance:list-employee'
+LOGOUT_REDIRECT_URL = 'accounts:login_user'
+
+LOGIN_URL = 'accounts:login_user'
+LOGOUT_URL = 'accounts:logout_user'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
