@@ -1,5 +1,5 @@
-{% extends 'accounts/base_visitor.html' %}
-{% block title %}Register{% endblock %}
+{% extends 'insurance/base.html' %}
+{% block title %}My Profile{% endblock %}
 {% block register_active %}active{% endblock %}
 
 {% block body %}
@@ -8,7 +8,13 @@
     <div class="row">
         <div class="col-sm-12 col-md-6">
             <div class="panel panel-default">
+                <div class="panel-footer">
+                    change your password? <a href="{% url 'accounts:change_my_password' %}">Click here</a> .
+                </div>
                 <div class="panel-body">
+                    {% if user.is_admin %}
+                    <h4>You Are Admin</h4>
+                    {% endif %}
                     <h3>Edit My Profile</h3>
                     {% if error_message %}
                         <p><strong>{{ error_message }}</strong></p>

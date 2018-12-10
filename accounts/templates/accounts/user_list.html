@@ -1,10 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'insurance/base.html' %}
+{% block title %}All Users{% endblock %}
+{% block users_active %}active{% endblock %}
+
+{% load static %}
+{% block javascript %}
+  <script src="{% static 'accounts/user.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid songs-container">
+    <div class="row">
+        <div class="col-sm-12" style="margin-bottom: 10px;">
+
+                <a href="{% url 'accounts:register' %}" >
+                    <button class="btn btn-primary">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;New User
+                    </button>
+                </a>
+
+
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-12">
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table" id="user-table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Name</th>
+                                <th>Is Admin</th>
+                                <th>Actions</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% include 'accounts/partial_user_list.html' %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal fade" id="modal-user">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Viberr{% endblock %}</title>
+    <title>{% block title %}Insurance{% endblock %}</title>
     {% load staticfiles %}
     <link rel="shortcut icon" type="image/png" href="{%  static 'favicon.ico' %}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -18,7 +18,7 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="#">Insurance</a>
             <ul class="nav navbar-nav">
-                <li class="{% block register_active %}{% endblock %}"><a href="{% url 'accounts:register' %}">Register</a></li>
+                <!--<li class="{% block register_active %}{% endblock %}"><a href="{% url 'accounts:register' %}">Register</a></li>-->
                 <li class="{% block login_active %}{% endblock %}"><a href="{% url 'accounts:login_user' %}">Log In</a></li>
             </ul>
         </div>
