@@ -17,14 +17,14 @@ class Employee(Person):
     phone = models.CharField(max_length=15)
     address = models.CharField(max_length=150)
     employee_image = models.ImageField(upload_to='employee_image',
-                                       default='employee_image/none/default.png',
+                                       null=True,
                                        blank=True)
     function = models.CharField(max_length=100)
     hiring_date = models.DateField()
 
-
+m
 class Relation(models.Model):
-    parental_relation = models.CharField(max_length=50)
+    parental_relation = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
         return self.parental_relation
