@@ -22,7 +22,7 @@ class Employee(Person):
     function = models.CharField(max_length=100)
     hiring_date = models.DateField()
 
-m
+    
 class Relation(models.Model):
     parental_relation = models.CharField(max_length=50, unique=True)
 
