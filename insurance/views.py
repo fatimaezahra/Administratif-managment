@@ -65,8 +65,6 @@ def delete_employee(request, pk, page):
             employees = paginator.page(page)
         except EmptyPage:
             employees = paginator.page(paginator.num_pages)
-        print(page)
-        print(employees.number)
         employees.number = page
         data['form_is_valid'] = True  # This is just to play along with the existing code
         data['html_employee_list'] = render_to_string('insurance/partial_employee_list.html', {
