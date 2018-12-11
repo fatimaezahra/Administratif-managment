@@ -43,6 +43,9 @@ def login_user(request):
 @login_required
 @admin_required
 def register(request):
+    print(request.POST)
+    if "cancel" in request.POST:
+        return redirect('accounts:list_user')
     form = CustomUserCreationForm(request.POST or None, request.FILES or None)
     if request.method == 'POST':
         if form.is_valid():
@@ -54,7 +57,7 @@ def register(request):
                 return redirect('accounts:list_user')
 
         else:
-            return redirect('accounts:list_user')
+            messages.error(request, 'Please correct the error below.')
     context = {
         "form": form,
     }
@@ -63,32 +66,29 @@ def register(request):
 
 @login_required
 def update_my_profile(request):
-    # if not request.user.is_authenticated:
-    #     return redirect('accounts:login_user')
+    print(request.POST)
     if "cancel" in request.POST:
         return redirect('insurance:list-employee')
     user = get_object_or_404(CustomUser, pk=request.user.id)
+    print(user.password)
     form = CustomUserChangeForm\
         (request.POST or None, request.FILES or None, instance=user)
     form.fields['username'].widget.attrs['readonly'] = True
     # form.fields['is_admin'].widget.attrs['disabled'] = True
     # form.fields['is_admin'].widget.attrs['checked'] = True
     if request.method == 'POST':
+        print(request.POST['username'])
         if form.is_valid():
             user.save()
             return redirect('insurance:list-employee')
-
+        else:
+            messages.error(request, 'Please correct the error below.')
     return render(request, 'accounts/update_my_profile.html',{'form': form, })
 
 
 @login_required
 @admin_required
 def list_user(request):
-    # if not request.user.is_authenticated:
-    #     return redirect('accounts:login_user')
-    # if not request.user.is_admin:
-    #     return redirect('insurance:list-employee')
-
     user_list = CustomUser.objects.all().exclude(id=request.user.id)
 
     return render(request, 'accounts/user_list.html', {
@@ -109,6 +109,8 @@ def update_user(request, pk):
         if form.is_valid():
             user.save()
             return redirect('accounts:list_user')
+        else:
+         return render(request, 'accounts/register.html', {'form': form, })
     else:
         form = CustomUserChangeAdminForm(instance=user)
     return render(request, 'accounts/register.html', {'form': form, })
@@ -124,7 +126,7 @@ def delete_user(request, pk):
     if request.method == 'POST':
         user.delete()
         data['form_is_valid'] = True
-        users = CustomUser.objects.all()
+        users = CustomUser.objects.all().exclude(id=request.user.id)
         data['html_user_list'] = render_to_string('accounts/partial_user_list.html', {
             'users': users
         })
@@ -137,6 +139,8 @@ def delete_user(request, pk):
 
 @login_required
 def change_password(request):
+    if "cancel" in request.POST:
+        return redirect('accounts:update_my_profile')
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
@@ -156,6 +160,8 @@ def change_password(request):
 @login_required
 @admin_required
 def admin_change_password(request, pk):
+    if "cancel" in request.POST:
+        return redirect('accounts:list_user')
     user_change = get_object_or_404(CustomUser, pk=pk)
     if request.method == 'POST':
         form = AdminPasswordChangeForm(user_change, request.POST)
