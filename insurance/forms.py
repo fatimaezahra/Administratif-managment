@@ -33,3 +33,9 @@ class FileInsuranceForm(forms.ModelForm):
         self.fields['delivery_date'].widget.attrs.update({'class': 'datepicker', 'onkeydown': 'return false'})
         self.fields['filing_date'].widget.attrs.update({'class': 'datepicker', 'onkeydown': 'return false'})
         self.fields['Repayment_date'].widget.attrs.update({'class': 'datepicker', 'onkeydown': 'return false'})
+
+        self.fields['stat'].widget.attrs.update({'class': 'form-control'})
+
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'datepicker form-control', 'onkeydown': 'return false'})
+

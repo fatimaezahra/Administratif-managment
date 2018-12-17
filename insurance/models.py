@@ -1,6 +1,10 @@
 from django.db import models
 
-
+STATUS_CHOICES = (
+    ('in_progres','In progress'),
+    ('finished','Finished'),
+    ('refused', 'Refused'),
+)
 class Person(models.Model):
     name = models.CharField(max_length=50, blank=True)
     first_name = models.CharField(max_length=50)
@@ -40,7 +44,7 @@ class FileInsurance(models.Model):
     filing_date = models.DateField(blank=True)
     amount = models.FloatField(blank=True)
     delivery_date = models.DateField(blank=True)
-    stat = models.CharField(choices=(('Encours','Encours'),('Terminer','Terminer')),max_length=20,blank=True)
+    stat = models.CharField(choices=STATUS_CHOICES, max_length=20,blank=True)
     collaborator = models.ForeignKey('Employee',on_delete=models.CASCADE,related_name='collaborator',blank=True,null=True)
     Patient = models.ForeignKey('Family',on_delete=models.CASCADE,related_name='patient',blank=True,null=True)
     file_number = models.IntegerField(default=1)

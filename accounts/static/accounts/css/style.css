@@ -27,13 +27,21 @@ ul.errorlist > li {
     color: #FDB230;
 }
 
-.logo {
+.login {
     float:left;
 	height:30px;
 	margin-top:10px
 	}
-
+.logo {
+    height: 44px;
+    margin-top: -0.7em;
+	}
 a:hover {
     text-decoration: none;
 }
-
+.navbar-inverse{
+    background-color: #112b3f;
+}
+.panel-body h3{
+    text-align: center;
+}
