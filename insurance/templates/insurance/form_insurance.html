@@ -1,0 +1,37 @@
+{% extends 'insurance/base.html' %}
+{% block title %}Add a new insurance file {% endblock %}
+{% block insurances_active %}active{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+    <div class="row">
+
+        <div class="col-sm-12 col-md-7">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Add a New Insurance File</h3>
+                    <form class="form-horizontal" role="form" action="{% url 'insurance:create' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% include 'accounts/form_template.html' %}
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+
+                                <button type="submit" class="btn btn-success">Submit</button>
+
+                                <a href="{% url 'insurance:index' %}" >
+                    <button class="btn btn-primary">
+                        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>&nbsp;Cancel
+                    </button>
+                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

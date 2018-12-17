@@ -39,13 +39,13 @@ class Family(Person):
 class FileInsurance(models.Model):
     filing_date = models.DateField(blank=True)
     amount = models.FloatField(blank=True)
-    delivery_date= models.DateField(blank=True)
-    stat = models.CharField(choices=(('e','encoure'),('t','terminer')),max_length=20,blank=True)
+    delivery_date = models.DateField(blank=True)
+    stat = models.CharField(choices=(('Encours','Encours'),('Terminer','Terminer')),max_length=20,blank=True)
     collaborator = models.ForeignKey('Employee',on_delete=models.CASCADE,related_name='collaborator',blank=True,null=True)
     Patient = models.ForeignKey('Family',on_delete=models.CASCADE,related_name='patient',blank=True,null=True)
     file_number = models.IntegerField(default=1)
-    reimbursement_date = models.DateField(null=True)
-    amount = models.BooleanField()
+    Repayment_date = models.DateField(null=True)
+    amount_reimbursed = models.BooleanField(null=True)
     regulation_number = models.IntegerField(null=True)
     method_settlement = models.CharField(max_length=60, null=True)
 

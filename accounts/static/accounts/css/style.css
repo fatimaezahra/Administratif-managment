@@ -32,3 +32,8 @@ ul.errorlist > li {
 	height:30px;
 	margin-top:10px
 	}
+
+a:hover {
+    text-decoration: none;
+}
+

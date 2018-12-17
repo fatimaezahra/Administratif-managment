@@ -7,7 +7,9 @@
     <link rel="shortcut icon" type="image/png" href="{%  static 'favicon.ico' %}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="{% static 'accounts/style.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/style.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/bootstrap-toggle.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-datepicker.min.css' %}"/>
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>-->
     <!--<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->
 
@@ -35,7 +37,7 @@
                 <li class="{% block users_active %}{% endblock %}"><a href="{% url 'accounts:list_user' %}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp; Users</a></li>
                 {% endif %}
                 <li class="{% block employees_active %}{% endblock %}"><a href="{% url 'insurance:list-employee' %}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp; Employees</a></li>
-                <li class="{% block insurances_active %}{% endblock %}"><a href="#"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp; Files Insurance</a></li>
+                <li class="{% block insurances_active %}{% endblock %}"><a href="{% url 'insurance:index' %}"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp; Files Insurance</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li >
@@ -66,6 +68,10 @@
 
 <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>  <!-- JQUERY HERE -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <script src="{% static 'js/bootstrap-toggle.min.js' %}"></script>
+
 {% block javascript %}
     {% endblock %}
 </body>

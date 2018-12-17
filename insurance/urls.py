@@ -1,10 +1,9 @@
 from django.urls import path
 from . import views
 
-
 app_name = 'insurance'
 urlpatterns = [
-        # employee
+    # employee
     path('employee/add/', views.create_employee,
          name='create-employee'),
     path('employee/delete/<int:pk>/<int:page>/', views.delete_employee,
@@ -12,7 +11,7 @@ urlpatterns = [
     path('employee/update/<int:pk>/', views.update_employee,
          name='update-employee'),
     path('employees/', views.list_employee, name='list-employee'),
-        # family
+    # family
     path('employee/<int:pk>/', views.detail_employee,
          name='detail-employee'),
     path('employee/<int:pk>/add-family/', views.create_family,
@@ -21,7 +20,7 @@ urlpatterns = [
          name='update-family'),
     path('employee/<int:pk>/delete-family/<int:pk2>/', views.delete_family,
          name='delete-family'),
-        # relation
+    # relation
     path('list-relation/', views.list_relation, name='list-relation'),
     path('create-relation/', views.create_relation,
          name='create-relation'),
@@ -29,4 +28,17 @@ urlpatterns = [
          name='update-relation'),
     path('delete-relation/<int:pk>/', views.delete_relation,
          name='delete-relation'),
+
+    path('create', views.create, name='create'),
+
+    path('details/<int:pk>', views.detail, name='details'),
+
+    path('', views.index,
+         name='index'),
+    path('delete/<int:pk>', views.delete,
+         name='delete'),
+    path('update/<int:pk>', views.update,
+         name='update'),
+path('update-state/<int:pk>', views.updateState,
+         name='update-state'),
 ]

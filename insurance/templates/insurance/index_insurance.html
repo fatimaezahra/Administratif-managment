@@ -1,0 +1,85 @@
+{% extends 'insurance/base.html' %}
+{% block title %}Add a new insurance file {% endblock %}
+{% block insurances_active %}active{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid songs-container">
+    <div class="row">
+        <div class="col-sm-12" style="margin-bottom: 10px;">
+
+                <a href="{% url 'insurance:create' %}" >
+                    <button class="btn btn-primary">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;New file insurance
+                    </button>
+                </a>
+
+
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-9">
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table" id="employee-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Filing date</th>
+                                <th>Amount</th>
+                                <th>Delivery date</th>
+                                <th>Statut</th>
+                                <th>File Number</th>
+                                <th>Repayment date</th>
+                                <th>Amount reimbursed</th>
+                                <th>Patient</th>
+
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% include 'insurance/insurance_list.html' %}
+                        </tbody>
+                    </table>
+                    <!--{% if insurances.has_other_pages %}-->
+                      <!--<ul class="pagination">-->
+                        <!--{% if insurances.has_previous %}-->
+                          <!--<li><a href="?page={{ insurances.previous_page_number }}">&laquo;</a></li>-->
+                        <!--{% else %}-->
+                          <!--<li class="disabled"><span>&laquo;</span></li>-->
+                        <!--{% endif %}-->
+                        <!--{% for i in insurances.paginator.page_range %}-->
+                          <!--{% if insurances.number == i %}-->
+                            <!--<li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>-->
+                          <!--{% else %}-->
+                            <!--<li><a href="?page={{ i }}">{{ i }}</a></li>-->
+                          <!--{% endif %}-->
+                        <!--{% endfor %}-->
+                        <!--{% if insurances.has_next %}-->
+                          <!--<li><a href="?page={{ insurances.next_page_number }}">&raquo;</a></li>-->
+                        <!--{% else %}-->
+                          <!--<li class="disabled"><span>&raquo;</span></li>-->
+                        <!--{% endif %}-->
+                      <!--</ul>-->
+                    <!--{% endif %}-->
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal fade" id="modal-employee">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      </div>
+    </div>
+</div>
+
+{% endblock %}

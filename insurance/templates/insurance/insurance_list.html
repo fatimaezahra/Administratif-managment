@@ -1,0 +1,91 @@
+
+{% for ins in insurances %}
+   <tr>
+       <td>{{ ins.collaborator.name }}</td>
+       <td>{{ ins.filing_date}}</td>
+       <td>{{ ins.amount}}</td>
+       <td>{{ ins.delivery_date}}</td>
+       <td>{{ ins.stat}}</td>
+       <td>{{ ins.file_number}}</td>
+       <td>{{ ins.Repayment_date}}</td>
+       <td>{{ ins.amount_reimbursed}}</td>
+       <td>{{ ins.patient}}</td>
+
+       <td>
+          <a href="{% url 'insurance:details' ins.id %}">
+
+          <button  class="btn btn-primary btn-xs">
+          <span class="glyphicon glyphicon-eye-open "></span>&nbsp; Detail
+          </button>
+          </a>
+
+          <a href="{% url 'insurance:update' ins.id %}">
+          <button  class="btn btn-warning btn-xs">
+          <span class="glyphicon glyphicon-pencil "></span>&nbsp; Edit &nbsp;&nbsp;
+          </button>
+          </a>
+
+
+           <button type="button"
+             class="btn btn-danger btn-xs js-delete-insurance"
+             data-url="{% url 'insurance:delete' ins.id%}"
+             >
+             <span class="glyphicon glyphicon-trash"></span> Delete
+          </button>
+
+           </td>
+  </tr>
+{% empty %}
+  <tr>
+     <td colspan="7" class="text-center bg-warning">No insurance</td>
+  </tr>
+ {% endfor %}
+
+<div>
+  {% if insurances.has_other_pages %}
+                      <ul class="pagination">
+                        {% if insurances.has_previous %}
+                          <li><a href="?page={{ insurances.previous_page_number }}">&laquo;</a></li>
+                        {% else %}
+                          <li class="disabled"><span>&laquo;</span></li>
+                        {% endif %}
+
+                        {% for i in insurances.paginator.page_range %}
+                          {% if insurances.number == i %}
+                            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                          {% else %}
+                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                          {% endif %}
+                        {% endfor %}
+
+                        {% if insurances.has_next %}
+                          <li><a href="?page={{ insurances.next_page_number }}">&raquo;</a></li>
+                        {% else %}
+                          <li class="disabled"><span>&raquo;</span></li>
+                        {% endif %}
+                      </ul>
+                    {% endif %}
+</div>
+
+<div class="modal fade" id="modal-insurance">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form method="post" action="" id="js-insurance-delete-form">
+          {% csrf_token %}
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title">Confirm removing file insurance</h4>
+          </div>
+          <div class="modal-body">
+            <p class="lead">Are you sure you want to delete this file insurance ?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>

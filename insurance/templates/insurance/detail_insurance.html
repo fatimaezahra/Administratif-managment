@@ -1,0 +1,96 @@
+{% extends 'insurance/base.html' %}
+{% block title %}insurance file details{% endblock %}
+{% block insurances_active %}active{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid songs-container">
+    <div class="row">
+        <div class="col-sm-12" style="margin-bottom: 10px;">
+
+                <a href="{% url 'insurance:index' %}" >
+                    <button class="btn btn-primary">
+                        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>&nbsp;back
+                    </button>
+                </a>
+
+
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-9">
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table-striped table">
+                    <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Filing date</th>
+                                <th>Amount</th>
+                                <th>Delivery date</th>
+                                <th>File Number</th>
+                                <th>Repayment date</th>
+                                <th>Amount reimbursed</th>
+                                <th>Patient</th>
+                                <th>Statut</th>
+
+
+                            </tr>
+                        </thead>
+                       <tr>
+                            <td>{{ insurance.collaborator.name }}</td>
+                            <td>{{ insurance.filing_date}}</td>
+                            <td>{{ insurance.amount}}</td>
+                            <td>{{ insurance.delivery_date}}</td>
+                            <td>{{ insurance.file_number}}</td>
+                            <td>{{ insurance.Repayment_date}}</td>
+                            <td>{{ insurance.amount_reimbursed}}</td>
+                            <td>{{ insurance.patient}}</td>
+                            <td>
+                                {% csrf_token %}
+                                <input id="insurance_state" data-on="Terminer" data-off="Encours" type="checkbox" data-toggle="toggle" {%if insurance.stat == 'Terminer' %} checked {% endif %}/>
+                            </td>
+
+
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div class="modal fade" id="modal-insurance-state">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form method="post" action="{% url 'insurance:update-state' insurance.id %}" >
+            <input name="state" type="hidden" id="js-insurance-state-input">
+          {% csrf_token %}
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title">Confirm state update</h4>
+          </div>
+          <div class="modal-body">
+            <p class="lead">Are you sure you want to update state of this file insurance ?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" id="btnclose">Close</button>
+            <button type="submit" class="btn btn-danger">Ok</button>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>
+
+{% endblock %}

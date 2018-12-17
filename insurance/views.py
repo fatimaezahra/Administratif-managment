@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse
@@ -5,8 +6,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.template.loader import render_to_string
 
 from accounts.decorators import admin_required
-from insurance.forms import EmployeeForm, FamilyForm, RelationForm
-from insurance.models import Employee, Family, Relation
+from insurance.forms import EmployeeForm, FamilyForm, RelationForm, FileInsuranceForm
+from insurance.models import Employee, Family, Relation, FileInsurance
 
 
 @login_required
@@ -56,7 +57,7 @@ def delete_employee(request, pk, page):
 
         paginator = Paginator(employee_list, 4)
 
-        if (page-1) == paginator.num_pages:
+        if (page - 1) == paginator.num_pages:
             page = paginator.num_pages
         page_current = request.GET.get('page', page)
         try:
@@ -214,3 +215,85 @@ def delete_relation(request, pk):
         context = {'relation': relation, }
         data['html_form'] = render_to_string('insurance/partial_relation_delete.html', context, request=request, )
     return JsonResponse(data)
+
+
+@login_required
+def create(request):
+    insurance = FileInsuranceForm(request.POST or None)
+    print(insurance)
+    if insurance.is_valid():
+        insurance.save()
+        messages.info(request, 'insurance created successfully')
+        return redirect("insurance:index")
+    context = {
+        'form': insurance
+    }
+    return render(request, 'insurance/form_insurance.html', context)
+
+
+@login_required
+def index(request):
+    insurances = FileInsurance.objects.all()
+    page = request.GET.get('page', 1)
+    paginator = Paginator(insurances, 4)
+    try:
+        insurances = paginator.page(page)
+    except PageNotAnInteger:
+        insurances = paginator.page(1)
+    except EmptyPage:
+        insurances = paginator.page(paginator.num_pages)
+    context = {
+        'insurances': insurances
+    }
+
+    return render(request, 'insurance/index_insurance.html', context)
+
+
+@login_required
+def detail(request, pk):
+    insurance = get_object_or_404(FileInsurance, pk=pk)
+    return render(request, 'insurance/detail_insurance.html',
+                  {'insurance': insurance, })
+
+
+@login_required
+# remove the selected employee by id
+def delete(request, pk):
+    insurance = get_object_or_404(FileInsurance, pk=pk)
+    if request.method == 'POST':
+        insurance.delete()
+        messages.info(request, 'insurance file removed')
+        return redirect('insurance:index')
+    return redirect('insurance:index')
+
+
+@login_required
+def update(request, pk):
+    insurance = get_object_or_404(FileInsurance, pk=pk)
+    form = FileInsuranceForm(request.POST or None, request.FILES or None, instance=insurance)
+    if "cancel" in request.POST:
+        return render(request, 'insurance/detail_insurance.html',
+                      {'insurance': insurance, })
+
+    if request.method == 'POST':
+        if form.is_valid():
+            insurance.save()
+            return redirect('insurance:index')
+    else:
+        form = FileInsuranceForm(instance=insurance)
+        return render(request, 'insurance/update_insurance.html', {'form': form, })
+
+
+@login_required
+def updateState(request, pk):
+    insurance = get_object_or_404(FileInsurance, pk=pk)
+
+    if request.method == 'POST':
+        state = request.POST["state"]
+        if state == "true":
+            insurance.stat = "Terminer"
+        else:
+            insurance.stat = "Encours"
+        insurance.save(update_fields=["stat"])
+
+    return redirect('insurance:details', pk=pk)
