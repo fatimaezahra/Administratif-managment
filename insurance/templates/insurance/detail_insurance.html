@@ -35,6 +35,8 @@
                                 <th>Repayment date</th>
                                 <th>Amount reimbursed</th>
                                 <th>Patient</th>
+
+                                <th>collaborator</th>
                                 <th>Statut</th>
 
 
@@ -49,9 +51,10 @@
                             <td>{{ insurance.Repayment_date}}</td>
                             <td>{{ insurance.amount_reimbursed}}</td>
                             <td>{{ insurance.patient}}</td>
+                            <td>{{ insurance.collaborator}}</td>
                             <td>
                                 {% csrf_token %}
-                                <input id="insurance_state" data-on="Terminer" data-off="Encours" type="checkbox" data-toggle="toggle" {%if insurance.stat == 'Terminer' %} checked {% endif %}/>
+                                <input id="insurance_state" data-on="Finished" data-off="In progress" type="checkbox" data-toggle="toggle" {%if insurance.stat == 'Terminer' %} checked {% endif %}/>
                             </td>
 
 

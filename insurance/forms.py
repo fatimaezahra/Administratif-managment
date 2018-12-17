@@ -30,12 +30,19 @@ class FileInsuranceForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(FileInsuranceForm, self).__init__(*args, **kwargs)
 
-        self.fields['delivery_date'].widget.attrs.update({'class': 'datepicker', 'onkeydown': 'return false'})
-        self.fields['filing_date'].widget.attrs.update({'class': 'datepicker', 'onkeydown': 'return false'})
-        self.fields['Repayment_date'].widget.attrs.update({'class': 'datepicker', 'onkeydown': 'return false'})
-
+        self.fields['delivery_date'].widget.attrs.update({'class': 'datepicker form-control', 'onkeydown': 'return false'})
+        self.fields['filing_date'].widget.attrs.update({'class': 'datepicker form-control', 'onkeydown': 'return false'})
+        self.fields['Repayment_date'].widget.attrs.update({'class': 'datepicker form-control', 'onkeydown': 'return false'})
+        self.fields['Patient'].widget.attrs.update({'class': 'form-control'})
+        self.fields['amount'].widget.attrs.update({'class': 'form-control'})
         self.fields['stat'].widget.attrs.update({'class': 'form-control'})
+        self.fields['file_number'].widget.attrs.update({'class': 'form-control'})
+        self.fields['amount_reimbursed'].widget.attrs.update({'class': 'form-control'})
+        self.fields['collaborator'].widget.attrs.update({'class': 'form-control'})
+        self.fields['regulation_number'].widget.attrs.update({'class': 'form-control'})
+        self.fields['method_settlement'].widget.attrs.update({'class': 'form-control'})
 
-        for field in self.fields:
-            self.fields[field].widget.attrs.update({'class': 'datepicker form-control', 'onkeydown': 'return false'})
+
+
+
 

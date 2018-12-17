@@ -219,6 +219,9 @@ def delete_relation(request, pk):
 
 @login_required
 def create(request):
+    if 'cancel' in request.POST:
+        return redirect('insurance:index')
+
     insurance = FileInsuranceForm(request.POST or None)
     if insurance.is_valid():
         insurance.save()
@@ -290,9 +293,9 @@ def updateState(request, pk):
     if request.method == 'POST':
         state = request.POST["state"]
         if state == "true":
-            insurance.stat = "Terminer"
+            insurance.stat = "Finished"
         else:
-            insurance.stat = "Encours"
+            insurance.stat = "In progress"
         insurance.save(update_fields=["stat"])
 
     return redirect('insurance:details', pk=pk)
