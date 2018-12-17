@@ -219,8 +219,10 @@ def delete_relation(request, pk):
 
 @login_required
 def create(request):
+    if 'cancel' in request.POST:
+        return redirect('insurance:index')
+
     insurance = FileInsuranceForm(request.POST or None)
-    print(insurance)
     if insurance.is_valid():
         insurance.save()
         messages.info(request, 'insurance created successfully')
