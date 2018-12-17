@@ -45,7 +45,7 @@ class FileInsurance(models.Model):
     Patient = models.ForeignKey('Family',on_delete=models.CASCADE,related_name='patient',blank=True,null=True)
     file_number = models.IntegerField(default=1)
     Repayment_date = models.DateField(null=True)
-    amount_reimbursed = models.BooleanField(null=True)
+    amount_reimbursed = models.IntegerField(null=True)
     regulation_number = models.IntegerField(null=True)
     method_settlement = models.CharField(max_length=60, null=True)
 
