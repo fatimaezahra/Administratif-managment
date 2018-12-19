@@ -16,13 +16,13 @@
        <td>
           <a href="{% url 'insurance:detail-employee' employee.id %}">
           <button  class="btn btn-primary btn-xs">
-          <span class="glyphicon glyphicon-eye-open "></span>&nbsp; Detail
+          <span class="fas fa-info-circle"></span>&nbsp; Detail
           </button>
           </a>
 
           <a href="{% url 'insurance:update-employee' employee.id %}">
           <button  class="btn btn-warning btn-xs">
-          <span class="glyphicon glyphicon-pencil "></span>&nbsp; Edit &nbsp;&nbsp;
+          <span class="far fa-edit"></span>&nbsp; Edit &nbsp;&nbsp;
           </button>
           </a>
 
@@ -30,7 +30,7 @@
            <button type="button"
              class="btn btn-danger btn-xs js-delete-employee"
              data-url="{% url 'insurance:delete-employee' employee.id employees.number %}">
-             <span class="glyphicon glyphicon-trash"></span> Delete
+             <span class="fas fa-trash-alt"></span> Delete
           </button>
 
            </td>

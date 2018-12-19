@@ -11,14 +11,14 @@
 
 <div class="container-fluid songs-container">
     <div class="row">
-        <div class="col-sm-12" style="margin-bottom: 10px;">
-
+        <div class="col-sm-12">
+<div class="top-btn">
                 <a href="{% url 'insurance:create-employee' %}" >
                     <button class="btn btn-primary">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;New Employee
                     </button>
                 </a>
-
+</div>
 
         </div>
     </div>
@@ -32,10 +32,10 @@
                     <table class="table" id="employee-table">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>First Name</th>
-                                <th>Image</th>
-                                <th class="col-sm-3">Actions</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">First Name</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Actions</th>
 
                             </tr>
                         </thead>

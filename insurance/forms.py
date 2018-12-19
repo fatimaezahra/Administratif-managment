@@ -8,6 +8,21 @@ class EmployeeForm(forms.ModelForm):
         model = Employee
         fields = '__all__'
 
+    def __init__(self, *args, **kwargs):
+        super(EmployeeForm, self).__init__(*args, **kwargs)
+
+        self.fields['service_number'].widget.attrs.update({'class': 'form-control'})
+        self.fields['phone'].widget.attrs.update({'class': 'form-control'})
+        self.fields['address'].widget.attrs.update({'class': 'form-control'})
+        self.fields['employee_image'].widget.attrs.update({'class': 'form-control-file'})
+        self.fields['function'].widget.attrs.update({'class': 'form-control'})
+        self.fields['hiring_date'].widget.attrs.update({'class': 'datepicker form-control', 'onkeydown': 'return false'})
+        self.fields['name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['first_name'].widget.attrs.update({'class': 'form-control'})
+        self.fields['birth_date'].widget.attrs.update({'class': 'datepicker form-control', 'onkeydown': 'return false'})
+        self.fields['sex'].widget.attrs.update({'class': 'form-control'})
+
+
 
 class FamilyForm(forms.ModelForm):
     class Meta:

@@ -6,15 +6,15 @@
 
 <div class="container-fluid songs-container">
     <div class="row">
-        <div class="col-sm-12" style="margin-bottom: 10px;">
-
+        <div class="col-sm-12">
+<div class="top-btn">
                 <a href="{% url 'insurance:index' %}" >
                     <button class="btn btn-primary">
-                        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>&nbsp;back
+                        <span class="fas fa-chevron-circle-left" aria-hidden="true"></span>&nbsp;back
                     </button>
                 </a>
 
-
+</div>
         </div>
     </div>
 
@@ -36,7 +36,6 @@
                                 <th>Amount reimbursed</th>
                                 <th>Patient</th>
 
-                                <th>collaborator</th>
                                 <th>Statut</th>
 
 
@@ -51,10 +50,11 @@
                             <td>{{ insurance.Repayment_date}}</td>
                             <td>{{ insurance.amount_reimbursed}}</td>
                             <td>{{ insurance.patient}}</td>
-                            <td>{{ insurance.collaborator}}</td>
+
+
                             <td>
                                 {% csrf_token %}
-                                <input id="insurance_state" data-on="Finished" data-off="In progress" type="checkbox" data-toggle="toggle" {%if insurance.stat == 'Terminer' %} checked {% endif %}/>
+                                <input id="insurance_state" data-on="Finished" data-off="In progress" type="checkbox" data-toggle="toggle" {%if insurance.stat == 'Finished' %} checked {% endif %}/>
                             </td>
 
 
@@ -79,10 +79,10 @@
             <input name="state" type="hidden" id="js-insurance-state-input">
           {% csrf_token %}
           <div class="modal-header">
+          <h4 class="modal-title">Confirm state update</h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title">Confirm state update</h4>
           </div>
           <div class="modal-body">
             <p class="lead">Are you sure you want to update state of this file insurance ?</p>

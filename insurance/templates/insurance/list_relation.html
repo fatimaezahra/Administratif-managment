@@ -11,16 +11,16 @@
 
 <div class="container-fluid songs-container">
     <div class="row">
-        <div class="col-sm-12" style="margin-bottom: 10px;">
-
+        <div class="col-sm-12">
+<div class="top-btn">
                 <button type="button"
                         class="btn btn-primary js-create-relation"
                         data-url="{% url 'insurance:create-relation' %}">
-                  <span class="glyphicon glyphicon-plus"></span>
+                  <span class="fas fa-plus"></span>
                   Add New Relation
                 </button>
 
-
+</div>
         </div>
     </div>
 
@@ -33,8 +33,8 @@
                     <table class="table" id="relation-table">
                         <thead>
                             <tr>
-                                <th>Relation</th>
-                                <th class="col-sm-3">Actions</th>
+                                <th scope="col">Relation</th>
+                                <th scope="col">Actions</th>
 
                             </tr>
                         </thead>

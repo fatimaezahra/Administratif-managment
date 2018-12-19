@@ -71,7 +71,7 @@ def update_my_profile(request):
         return redirect('insurance:list-employee')
     user = get_object_or_404(CustomUser, pk=request.user.id)
     print(user.password)
-    form = CustomUserChangeForm\
+    form = CustomUserChangeForm \
         (request.POST or None, request.FILES or None, instance=user)
     form.fields['username'].widget.attrs['readonly'] = True
     # form.fields['is_admin'].widget.attrs['disabled'] = True
@@ -83,16 +83,19 @@ def update_my_profile(request):
             return redirect('insurance:list-employee')
         else:
             messages.error(request, 'Please correct the error below.')
-    return render(request, 'accounts/update_my_profile.html',{'form': form, })
+    password_form = PasswordChangeForm(request.user)
+    return render(request, 'accounts/update_my_profile.html', {'form': form, 'password_form' : password_form })
 
 
 @login_required
 @admin_required
 def list_user(request):
     user_list = CustomUser.objects.all().exclude(id=request.user.id)
+    form = PasswordChangeForm(request.user)
 
     return render(request, 'accounts/user_list.html', {
         'users': user_list,
+        'form': form
     })
 
 
@@ -104,13 +107,13 @@ def update_user(request, pk):
 
     user = get_object_or_404(CustomUser, pk=pk)
     form = CustomUserChangeAdminForm(request.POST or None, request.FILES or None,
-                        instance=user)
+                                     instance=user)
     if request.method == 'POST':
         if form.is_valid():
             user.save()
             return redirect('accounts:list_user')
         else:
-         return render(request, 'accounts/register.html', {'form': form, })
+            return render(request, 'accounts/register.html', {'form': form, })
     else:
         form = CustomUserChangeAdminForm(instance=user)
     return render(request, 'accounts/register.html', {'form': form, })
@@ -119,7 +122,6 @@ def update_user(request, pk):
 @login_required
 @admin_required
 def delete_user(request, pk):
-
     user = get_object_or_404(CustomUser, pk=pk)
     data = dict()
 

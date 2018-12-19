@@ -11,15 +11,15 @@
 
 <div class="container-fluid songs-container">
     <div class="row">
-        <div class="col-sm-12" style="margin-bottom: 10px;">
-
+        <div class="col-sm-12">
+<div class="top-btn">
                 <a href="{% url 'accounts:register' %}" >
                     <button class="btn btn-primary">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;New User
+                        <span class="fas fa-plus" aria-hidden="true"></span>&nbsp;New User
                     </button>
                 </a>
 
-
+</div>
         </div>
     </div>
 
@@ -32,10 +32,10 @@
                     <table class="table" id="user-table">
                         <thead>
                             <tr>
-                                <th>Username</th>
-                                <th>Name</th>
-                                <th class="col-sm-2">Is Admin</th>
-                                <th class="col-sm-4">Actions</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Is Admin</th>
+                                <th scope="col">Actions</th>
 
                             </tr>
                         </thead>

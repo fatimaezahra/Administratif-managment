@@ -8,6 +8,12 @@ $(document).ready(function () {
         $("#modal-insurance").modal("show");
     });
 
+
+    $(".js-update-pw").click(function () {
+        $("#js-update-password").attr("action", $(this).attr("data-url"));
+        $("#modal-change-password").modal("show");
+    });
+
     var state = $('#insurance_state').prop('checked');
 
     $('#insurance_state').change(function () {

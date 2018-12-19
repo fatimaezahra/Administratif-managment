@@ -6,35 +6,81 @@
 <div class="container-fluid">
 
     <div class="row">
-        <div class="col-sm-12 col-md-6">
-            <div class="panel panel-default">
-                <div class="panel-footer">
-                    change your password? <a href="{% url 'accounts:change_my_password' %}">Click here</a> .
+        <div class="form-group col-md-12">
+
+                <div class="card-title">
+                <div class="top-text">
+
+                <button data-url="{% url 'accounts:change_my_password' %}"  class="btn btn-default btn-xs js-update-pw">Click here</button>
                 </div>
-                <div class="panel-body">
+
                     {% if user.is_admin %}
                     <h4>You Are Admin</h4>
                     {% endif %}
-                    <h3>Edit My Profile</h3>
+                </div>
+
+
+
+                    <h1>Edit My Profile</h1>
                     {% if error_message %}
                         <p><strong>{{ error_message }}</strong></p>
                     {% endif %}
-                    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+                    <form class="row" role="form" action="" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         {% include 'accounts/form_template.html' %}
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-success">Submit</button>
-                                <input formnovalidate  type="submit" name="cancel" value="Cancel" class="btn btn-secondary"/>
+                        <div class="form-group col-md-12">
+                            <div class="row">
+                            <div class="col-md-6"><input formnovalidate  type="submit" name="cancel" value="Cancel" class="btn btn-secondary btn-lg"/></div>
+                            <div class="col-md-6"><button type="submit" class="btn btn-primary btn-lg"><span class="fas fa-edit"></span>Submit</button></div>
+
+
                             </div>
                         </div>
                     </form>
-                </div>
-            </div>
+
+
         </div>
     </div>
 
 </div>
 
-{% endblock %}
+<div class="modal fade" id="modal-change-password">
+    <div class="modal-dialog">
+      <div class="modal-content">
+<form method="post" action="" id="js-update-password">
+  {% csrf_token %}
+  <div class="modal-header">
+  <h4 class="modal-title">Change Password</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
 
+  </div>
+  <div class="modal-body">
+    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        {% for field in password_form %}
+
+    <div class="col-md-6">
+        <div class="col-sm-offset-2 col-sm-10">
+            <span class="text-danger small">{{ field.errors }}</span>
+        </div>
+        <label class="control-label" for="song_title">{{ field.label_tag }}</label>
+        {{ field }}
+    </div>
+{% endfor %}
+
+
+                    </form>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <button type="submit" class="btn btn-primary">Save changes</button>
+  </div>
+ </div>
+  </form>
+</div>
+</div>
+</div>
+
+{% endblock %}

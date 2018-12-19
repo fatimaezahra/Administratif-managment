@@ -1,4 +1,5 @@
 {% extends 'insurance/base.html' %}
+{% load staticfiles %}
 {% block title %}Add a new insurance file {% endblock %}
 {% block insurances_active %}active{% endblock %}
 
@@ -10,26 +11,32 @@
 
             <div class="form-group col-md-12">
 
+                        <img  src="{% static 'image/logo.png' %}" class="img-logo">
+
+
                     <h1>Add a New Insurance File</h1>
-                    <form class="form-horizontal" role="form" action="{% url 'insurance:create' %}" method="post" enctype="multipart/form-data">
+                    <form class="row" role="form" action="{% url 'insurance:create' %}" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         {% include 'accounts/form_template.html' %}
                         <div class="form-group col-md-12">
+
+<div class="row">
                          <div class="col-md-6 col-xs-6">
                                  <input formnovalidate  type="submit" name="cancel" value="Cancel" class="btn btn-secondary btn-lg"/>
                             </div>
                             <div class="col-md-6 col-xs-6">
 
-                                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                                <button type="submit" class="btn btn-primary btn-lg"><span class="fas fa-check"></span>Submit</button>
                             </div>
-
-
                         </div>
-
+                        </div>
                     </form>
 
 
             </div>
+
+
+
 
 
     </div>

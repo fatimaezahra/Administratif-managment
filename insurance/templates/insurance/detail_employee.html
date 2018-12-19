@@ -38,22 +38,22 @@
                 <!--</a>-->
              <!--</div>-->
 
-             <p>
+             <div class="top-btn">
                 <button type="button"
                         class="btn btn-primary js-create-family"
                         data-url="{% url 'insurance:create-family' employee.id %}">
-                  <span class="glyphicon glyphicon-plus"></span>
+                  <span class="fas fa-plus"></span>
                   Add New
                 </button>
-              </p>
+              </div>
 
 
 
 
-            <div class="panel panel-default">
-                <div class="panel-body">
+            <div class="row">
+                <div class="form-group col-md-12">
 
-                    <h3>Family</h3>
+                    <h1>Family</h1>
 
                     {% if error_message %}
                         <p><strong>{{ error_message }}</strong></p>
