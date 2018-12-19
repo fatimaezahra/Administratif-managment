@@ -38,13 +38,14 @@ class Family(Person):
     relation = models.ForeignKey('Relation', on_delete=models.SET_NULL, blank=True, null=True)
     employee_relation = models.ForeignKey('Employee', on_delete=models.CASCADE)
 
-
+class Status(models.Model):
+    status = models.CharField(choices=STATUS_CHOICES, max_length=20, blank=True)
 
 class FileInsurance(models.Model):
     filing_date = models.DateField(blank=True)
     amount = models.FloatField(blank=True)
     delivery_date = models.DateField(blank=True)
-    stat = models.CharField(choices=STATUS_CHOICES, max_length=20,blank=True)
+    status = models.ForeignKey('Status', on_delete=models.DO_NOTHING, null=True)
     collaborator = models.ForeignKey('Employee',on_delete=models.CASCADE,related_name='collaborator',blank=True,null=True)
     Patient = models.ForeignKey('Family',on_delete=models.CASCADE,related_name='patient',blank=True,null=True)
     file_number = models.IntegerField(default=1)
