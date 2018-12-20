@@ -39,6 +39,6 @@ urlpatterns = [
          name='delete'),
     path('update/<int:pk>', views.update,
          name='update'),
-path('update-state/<int:pk>', views.updateState,
+    path('update-state/<int:pk>', views.updateState,
          name='update-state'),
 ]

@@ -293,9 +293,9 @@ def updateState(request, pk):
     if request.method == 'POST':
         state = request.POST["state"]
         if state == "true":
-            insurance.stat = "Finished"
+            insurance.status = "Finished"
         else:
-            insurance.stat = "In progress"
-        insurance.save(update_fields=["stat"])
+            insurance.status = "In progress"
+        insurance.save(update_fields=["status"])
 
-    return redirect('insurance:details', pk=pk)
+    return redirect('insurance:index')

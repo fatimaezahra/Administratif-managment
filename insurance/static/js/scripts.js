@@ -16,7 +16,9 @@ $(document).ready(function () {
 
     var state = $('#insurance_state').prop('checked');
 
-    $('#insurance_state').change(function () {
+    $('.insurance_state').change(function () {
+        $("#js-insurance-state-form").attr("action", $(this).attr("data-url"));
+
         state = $(this).prop('checked');
         $("#js-insurance-state-input").val($(this).prop('checked'));
         $("#modal-insurance-state").modal("show");
@@ -29,4 +31,31 @@ $(document).ready(function () {
             $('#insurance_state').bootstrapToggle('on')
         }
     })
+
+
+    $("#idsearch").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+
+    $('#checkMethod2').hide();
+    $('#checkMethod2').prev().hide();
+    $('#checkMethod2').prop("disabled", true);
+
+    $('#checkMethod').change(function () {
+        var value = $(this).val();
+        if (value != null && value.trim() !== "" && value === "check") {
+            $('#checkMethod2').show();
+            $('#checkMethod2').prev().show();
+            $('#checkMethod2').prop("disabled", false);
+        } else {
+            $('#checkMethod2').prev().hide();
+            $('#checkMethod2').hide();
+            $('#checkMethod2').prop("disabled", true);
+        }
+
+    })
+
 });

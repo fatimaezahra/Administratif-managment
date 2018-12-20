@@ -1,5 +1,6 @@
 from django import forms
 
+
 from insurance.models import Employee, Family, Relation, FileInsurance
 
 
@@ -50,14 +51,22 @@ class FileInsuranceForm(forms.ModelForm):
         self.fields['Repayment_date'].widget.attrs.update({'class': 'datepicker form-control', 'onkeydown': 'return false'})
         self.fields['Patient'].widget.attrs.update({'class': 'form-control'})
         self.fields['amount'].widget.attrs.update({'class': 'form-control'})
-        self.fields['stat'].widget.attrs.update({'class': 'form-control'})
+        self.fields['status'].widget.attrs.update({'class': 'form-control'})
         self.fields['file_number'].widget.attrs.update({'class': 'form-control'})
         self.fields['amount_reimbursed'].widget.attrs.update({'class': 'form-control'})
         self.fields['collaborator'].widget.attrs.update({'class': 'form-control'})
         self.fields['regulation_number'].widget.attrs.update({'class': 'form-control'})
-        self.fields['method_settlement'].widget.attrs.update({'class': 'form-control'})
+        self.fields['method_settlement'].widget.attrs.update({'class': 'form-control', 'id': 'checkMethod'})
+        self.fields['method_settlement_check'].widget.attrs.update({'class': 'form-control', 'id': 'checkMethod2'})
 
-
+    class CountryForm(forms.Form):
+        OPTIONS = (
+            ("AUT", "Austria"),
+            ("DEU", "Germany"),
+            ("NLD", "Neitherlands"),
+        )
+        Countries = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
+                                              choices=OPTIONS)
 
 
 

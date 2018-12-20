@@ -33,7 +33,7 @@
                                 <th>Delivery date</th>
                                 <th>File Number</th>
                                 <th>Repayment date</th>
-                                <th>Amount reimbursed</th>
+                                <th>amount refunded</th>
                                 <th>Patient</th>
 
                                 <th>Statut</th>
@@ -54,7 +54,7 @@
 
                             <td>
                                 {% csrf_token %}
-                                <input id="insurance_state" data-on="Finished" data-off="In progress" type="checkbox" data-toggle="toggle" {%if insurance.stat == 'Finished' %} checked {% endif %}/>
+                                <input id="insurance_state" data-on="Finished" data-off="In progress" type="checkbox" data-toggle="toggle" {%if insurance.status == 'Finished' %} checked {% endif %}/>
                             </td>
 
 

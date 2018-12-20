@@ -1,25 +1,32 @@
+<form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="idsearch">
 
+ </form>
 {% for ins in insurances %}
+<tbody id="myTable">
    <tr>
        <td>{{ ins.collaborator.name }}</td>
        <td>{{ ins.filing_date}}</td>
        <td>{{ ins.amount}}</td>
        <td>{{ ins.delivery_date}}</td>
-       <td>{{ ins.stat}}</td>
        <td>{{ ins.file_number}}</td>
        <td>{{ ins.Repayment_date}}</td>
        <td>{{ ins.amount_reimbursed}}</td>
        <td>{{ ins.patient}}</td>
+       <td>
+                                {% csrf_token %}
+                                <input class="insurance_state" data-on="Finished" data-off="In progress" data-url="{% url 'insurance:update-state' ins.id %}" type="checkbox" data-toggle="toggle" {%if ins.status == 'Finished' %} checked {% endif %}/>
+       </td>
 
 
        <td>
-          <a href="{% url 'insurance:details' ins.id %}">
+          <!--<a href="{% url 'insurance:details' ins.id %}">
 
           <button  class="btn btn-primary btn-xs">
           <span><i class="fas fa-info-circle"></i></span>&nbsp; Detail
           </button>
           </a>
-
+-->
           <a href="{% url 'insurance:update' ins.id %}">
           <button  class="btn btn-warning btn-xs">
           <span><i class="far fa-edit"></i></span>&nbsp; Edit &nbsp;&nbsp;
@@ -29,17 +36,20 @@
 
            <button type="button"
              class="btn btn-danger btn-xs js-delete-insurance"
-             data-url="{% url 'insurance:delete' ins.id%}"
-             >
+             data-url="{% url 'insurance:delete' ins.id%}">
              <span><i class="fas fa-trash-alt"></i></span> Delete
           </button>
 
            </td>
   </tr>
+  </tbody>
 {% empty %}
   <tr>
      <td colspan="7" class="text-center bg-warning">No insurance</td>
   </tr>
+
+
+
  {% endfor %}
 
 <div>
@@ -84,3 +94,28 @@
       </div>
     </div>
 </div>
+
+ <div class="modal fade" id="modal-insurance-state">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form method="post" action="" id="js-insurance-state-form">
+            <input name="state" type="hidden" id="js-insurance-state-input">
+          {% csrf_token %}
+          <div class="modal-header">
+          <h4 class="modal-title">Confirm state update</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p class="lead">Are you sure you want to update state of this file insurance ?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" id="btnclose">Close</button>
+            <button type="submit" class="btn btn-danger">Ok</button>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>
+
