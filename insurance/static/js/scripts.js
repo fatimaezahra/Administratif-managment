@@ -18,19 +18,19 @@ $(document).ready(function () {
 
     $('.insurance_state').change(function () {
         $("#js-insurance-state-form").attr("action", $(this).attr("data-url"));
-
+        var that = $(this);
         state = $(this).prop('checked');
         $("#js-insurance-state-input").val($(this).prop('checked'));
         $("#modal-insurance-state").modal("show");
-    })
-
-    $("#btnclose").on("click", function () {
-        if (state) {
-            $('#insurance_state').bootstrapToggle('off');
-        } else {
-            $('#insurance_state').bootstrapToggle('on')
-        }
-    })
+        $("#btnclose").unbind();
+        $("#btnclose").click(function () {
+            if (state) {
+                that.bootstrapToggle('off');
+            } else {
+                that.bootstrapToggle('on')
+            }
+        });
+    });
 
 
     $("#idsearch").on("keyup", function () {
@@ -56,6 +56,21 @@ $(document).ready(function () {
             $('#checkMethod2').prop("disabled", true);
         }
 
+    })
+
+    $("#id_Patient").empty();
+    $('#id_collaborator').change(function () {
+        var value = $(this).val();
+        var name = $("#id_collaborator option:selected").text();;
+        $.get("/insurance/collaborator-patient/" + value, function (data, status) {
+            var $el = $("#id_Patient");
+            $el.empty(); // remove old options
+            $.each(data, function (key, value) {
+                $el.append($("<option></option>")
+                    .attr("value", value.key).text(value.value));
+            });
+            $("#id_Patient").prepend("<option value='" + value + "' selected='selected'>" + name + "</option>");
+        });
     })
 
 });

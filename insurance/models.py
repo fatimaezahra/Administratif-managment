@@ -49,14 +49,14 @@ class FileInsurance(models.Model):
     filing_date = models.DateField(blank=True)
     amount = models.FloatField(blank=True)
     delivery_date = models.DateField(blank=True)
-    status = models.CharField(choices=STATUS_CHOICES,max_length=220, default=STATUS_CHOICES[0][0])
+    status = models.CharField(choices=STATUS_CHOICES, max_length=220, null=True)
     Patient = models.ForeignKey('Family', on_delete=models.CASCADE, related_name='patient', blank=True, null=True)
     file_number = models.IntegerField(default=1)
     Repayment_date = models.DateField(null=True)
     amount_reimbursed = models.IntegerField(null=True)
     regulation_number = models.IntegerField(null=True)
     method_settlement = models.CharField(choices=PAIEMENT_CHOICES, max_length=60, null=True)
-    method_settlement_check = models.CharField(max_length=100, null=True)
+    check_number = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return str(self.pk)

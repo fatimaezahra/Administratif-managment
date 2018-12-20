@@ -57,16 +57,8 @@ class FileInsuranceForm(forms.ModelForm):
         self.fields['collaborator'].widget.attrs.update({'class': 'form-control'})
         self.fields['regulation_number'].widget.attrs.update({'class': 'form-control'})
         self.fields['method_settlement'].widget.attrs.update({'class': 'form-control', 'id': 'checkMethod'})
-        self.fields['method_settlement_check'].widget.attrs.update({'class': 'form-control', 'id': 'checkMethod2'})
+        self.fields['check_number'].widget.attrs.update({'class': 'form-control', 'id': 'checkMethod2'})
 
-    class CountryForm(forms.Form):
-        OPTIONS = (
-            ("AUT", "Austria"),
-            ("DEU", "Germany"),
-            ("NLD", "Neitherlands"),
-        )
-        Countries = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
-                                              choices=OPTIONS)
 
 
 

@@ -1,7 +1,10 @@
+import mimetypes
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.http import JsonResponse
+from django.core.serializers import json
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template.loader import render_to_string
 
@@ -273,9 +276,8 @@ def delete(request, pk):
 def update(request, pk):
     insurance = get_object_or_404(FileInsurance, pk=pk)
     form = FileInsuranceForm(request.POST or None, request.FILES or None, instance=insurance)
-    if "cancel" in request.POST:
-        return render(request, 'insurance/detail_insurance.html',
-                      {'insurance': insurance, })
+    if 'cancel' in request.POST:
+        return redirect('insurance:index')
 
     if request.method == 'POST':
         if form.is_valid():
@@ -299,3 +301,13 @@ def updateState(request, pk):
         insurance.save(update_fields=["status"])
 
     return redirect('insurance:index')
+
+
+@login_required
+def collaboratorPatient(request, pk):
+    employeeP = get_object_or_404(Employee, pk=pk)
+    patients = employeeP.family_set.all()
+    array = []
+    for p in patients:
+        array.append({'key': p.id, 'value': p.name})
+    return JsonResponse(array, safe=False)

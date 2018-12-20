@@ -41,4 +41,6 @@ urlpatterns = [
          name='update'),
     path('update-state/<int:pk>', views.updateState,
          name='update-state'),
+    path('collaborator-patient/<int:pk>', views.collaboratorPatient,
+         name='collaborator-patient'),
 ]
