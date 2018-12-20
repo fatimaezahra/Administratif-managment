@@ -1,7 +1,7 @@
 from django import forms
 
 
-from insurance.models import Employee, Family, Relation, FileInsurance
+from insurance.models import Employee, Family, Relation, FileInsurance, Status
 
 
 class EmployeeForm(forms.ModelForm):
@@ -34,6 +34,12 @@ class FamilyForm(forms.ModelForm):
 class RelationForm(forms.ModelForm):
     class Meta:
         model = Relation
+        fields = '__all__'
+
+
+class StatusForm(forms.ModelForm):
+    class Meta:
+        model = Status
         fields = '__all__'
 
 

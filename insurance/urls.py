@@ -24,6 +24,7 @@ urlpatterns = [
     path('list-relation/', views.list_relation, name='list-relation'),
     path('create-relation/', views.create_relation,
          name='create-relation'),
+    #path('create-status/', , ),
     path('update-relation/<int:pk>/', views.update_relation,
          name='update-relation'),
     path('delete-relation/<int:pk>/', views.delete_relation,

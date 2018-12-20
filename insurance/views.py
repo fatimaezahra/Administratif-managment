@@ -6,7 +6,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.template.loader import render_to_string
 
 from accounts.decorators import admin_required
-from insurance.forms import EmployeeForm, FamilyForm, RelationForm, FileInsuranceForm
+from insurance.forms import EmployeeForm, FamilyForm, RelationForm, FileInsuranceForm, StatusForm
 from insurance.models import Employee, Family, Relation, FileInsurance
 
 
@@ -186,6 +186,17 @@ def create_relation(request):
     else:
         form = RelationForm()
     return save_relation_form(request, form, 'insurance/partial_relation_create.html')
+
+@login_required
+@admin_required
+def create_status(request):
+    if request.method == 'POST':
+        form = StatusForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            pass
+    else:
+        form = StatusForm()
+    return render(request, 'home.html', {'form': form})
 
 
 @login_required
