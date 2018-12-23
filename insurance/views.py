@@ -1,13 +1,16 @@
+import mimetypes
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.http import JsonResponse
+from django.core.serializers import json
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template.loader import render_to_string
 
 from accounts.decorators import admin_required
 from insurance.forms import EmployeeForm, FamilyForm, RelationForm, FileInsuranceForm, StatusForm
-from insurance.models import Employee, Family, Relation, FileInsurance
+from insurance.models import Employee, Family, Relation, FileInsurance, Status
 
 
 @login_required
@@ -156,8 +159,9 @@ def delete_family(request, pk, pk2):
 @admin_required
 def list_relation(request):
     relations = Relation.objects.all()
+    all_status = Status.objects.all()
     return render(request, 'insurance/list_relation.html', {
-        'relations': relations,
+        'relations': relations, "all_status":all_status
     })
 
 
@@ -178,6 +182,21 @@ def save_relation_form(request, form, template_name):
     return JsonResponse(data)
 
 
+def save_status_form(request, form, template_name):
+    data = dict()
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            data['form_is_valid'] = True
+            all_status = Status.objects.all()
+            data['html_status_list'] = render_to_string('insurance/partial_status_list.html', {
+                'all_status': all_status
+            })
+        else:
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form_status'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
 @login_required
 @admin_required
 def create_relation(request):
@@ -191,13 +210,37 @@ def create_relation(request):
 @admin_required
 def create_status(request):
     if request.method == 'POST':
-        form = StatusForm(request.POST or None, request.FILES or None)
-        if form.is_valid():
-            pass
+        form = StatusForm(request.POST)
     else:
         form = StatusForm()
-    return render(request, 'home.html', {'form': form})
+    return save_status_form(request, form, 'insurance/create_status.html')
 
+@login_required
+@admin_required
+def update_status(request, pk):
+    status = get_object_or_404(Status, pk=pk)
+    if request.method == 'POST':
+        form = StatusForm(request.POST, instance=status)
+    else:
+        form = StatusForm(instance=status)
+    return save_status_form(request, form, 'insurance/update_status.html')
+
+@login_required
+@admin_required
+def delete_status(request, pk):
+    status = get_object_or_404(Status, pk=pk)
+    data = dict()
+    if request.method == 'POST':
+        status.delete()
+        data['form_is_valid'] = True
+        all_status = Status.objects.all()
+        data['html_status_list'] = render_to_string('insurance/partial_status_list.html', {
+            'all_status': all_status
+        })
+    else:
+        context = {'status': status, }
+        data['html_form_status'] = render_to_string('insurance/partial_status_delete.html', context, request=request, )
+    return JsonResponse(data)
 
 @login_required
 @admin_required
@@ -247,6 +290,7 @@ def create(request):
 @login_required
 def index(request):
     insurances = FileInsurance.objects.all()
+    all_status = Status.objects.all()
     page = request.GET.get('page', 1)
     paginator = Paginator(insurances, 4)
     try:
@@ -256,7 +300,8 @@ def index(request):
     except EmptyPage:
         insurances = paginator.page(paginator.num_pages)
     context = {
-        'insurances': insurances
+        'insurances': insurances,
+        "all_status": all_status,
     }
 
     return render(request, 'insurance/index_insurance.html', context)
@@ -284,9 +329,8 @@ def delete(request, pk):
 def update(request, pk):
     insurance = get_object_or_404(FileInsurance, pk=pk)
     form = FileInsuranceForm(request.POST or None, request.FILES or None, instance=insurance)
-    if "cancel" in request.POST:
-        return render(request, 'insurance/detail_insurance.html',
-                      {'insurance': insurance, })
+    if 'cancel' in request.POST:
+        return redirect('insurance:index')
 
     if request.method == 'POST':
         if form.is_valid():
@@ -298,15 +342,19 @@ def update(request, pk):
 
 
 @login_required
-def updateState(request, pk):
+def updateState(request, pk, pk_status):
     insurance = get_object_or_404(FileInsurance, pk=pk)
-
-    if request.method == 'POST':
-        state = request.POST["state"]
-        if state == "true":
-            insurance.status = "Finished"
-        else:
-            insurance.status = "In progress"
-        insurance.save(update_fields=["status"])
-
+    status = get_object_or_404(Status, pk=pk_status)
+    insurance.status=status
+    insurance.save(update_fields=["status"])
     return redirect('insurance:index')
+
+
+@login_required
+def collaboratorPatient(request, pk):
+    employeeP = get_object_or_404(Employee, pk=pk)
+    patients = employeeP.family_set.all()
+    array = []
+    for p in patients:
+        array.append({'key': p.id, 'value': p.name})
+    return JsonResponse(array, safe=False)

@@ -51,7 +51,6 @@ class FileInsuranceForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(FileInsuranceForm, self).__init__(*args, **kwargs)
-
         self.fields['delivery_date'].widget.attrs.update({'class': 'datepicker form-control', 'onkeydown': 'return false'})
         self.fields['filing_date'].widget.attrs.update({'class': 'datepicker form-control', 'onkeydown': 'return false'})
         self.fields['Repayment_date'].widget.attrs.update({'class': 'datepicker form-control', 'onkeydown': 'return false'})
@@ -63,16 +62,8 @@ class FileInsuranceForm(forms.ModelForm):
         self.fields['collaborator'].widget.attrs.update({'class': 'form-control'})
         self.fields['regulation_number'].widget.attrs.update({'class': 'form-control'})
         self.fields['method_settlement'].widget.attrs.update({'class': 'form-control', 'id': 'checkMethod'})
-        self.fields['method_settlement_check'].widget.attrs.update({'class': 'form-control', 'id': 'checkMethod2'})
+        self.fields['check_number'].widget.attrs.update({'class': 'form-control', 'id': 'checkMethod2'})
 
-    class CountryForm(forms.Form):
-        OPTIONS = (
-            ("AUT", "Austria"),
-            ("DEU", "Germany"),
-            ("NLD", "Neitherlands"),
-        )
-        Countries = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
-                                              choices=OPTIONS)
 
 
 

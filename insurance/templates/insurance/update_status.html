@@ -1,17 +1,16 @@
-<form method="post" action="{% url 'insurance:create-relation'  %}" class="js-relation-create-form">
+<form method="post" action="{% url 'insurance:update_status' form.instance.pk%}" class="js-status-update-form">
   {% csrf_token %}
   <div class="modal-header">
-  <h4 class="modal-title">Create a new relation</h4>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
+    <h4 class="modal-title">update status</h4>
   </div>
   <div class="modal-body">
     {% include 'insurance/partial_form.html' %}
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    <button type="submit" class="btn btn-primary">Create </button>
+    <button type="submit" class="btn btn-primary">update status</button>
   </div>
 </form>
-

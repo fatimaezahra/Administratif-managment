@@ -55,4 +55,5 @@ $(function () {
   $("#relation-table").on("click", ".js-delete-relation", loadForm);
   $("#modal-relation").on("submit", ".js-relation-delete-form", saveForm);
 
+
 });

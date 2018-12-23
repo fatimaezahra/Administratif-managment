@@ -1,17 +1,18 @@
 {% extends 'insurance/base.html' %}
-{% block title %}All Relations{% endblock %}
+{% block title %}Relations & status{% endblock %}
 {% block relations_active %}active{% endblock %}
 
 {% load static %}
 {% block javascript %}
   <script src="{% static 'insurance/relation.js' %}"></script>
+<script src="{% static 'js/status.js' %}"></script>
 {% endblock %}
 
 {% block body %}
 
 <div class="container-fluid songs-container">
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-6">
 <div class="top-btn">
                 <button type="button"
                         class="btn btn-primary js-create-relation"
@@ -21,7 +22,20 @@
                 </button>
 
 </div>
+</div>
+                <div class="col-sm-6">
+<div class="top-btn">
+                <button type="button"
+                        class="btn btn-primary js-create-status"
+                        data-url="{% url 'insurance:create_status' %}">
+                  <span class="fas fa-plus"></span>
+                  Add New Status
+                </button>
+
+</div>
+</div>
         </div>
+
     </div>
 
     <div class="row">
@@ -47,16 +61,44 @@
             </div>
 
         </div>
-
-    </div>
-
-</div>
-
-<div class="modal fade" id="modal-relation">
+        <div class="modal fade" id="modal-relation">
     <div class="modal-dialog">
       <div class="modal-content">
       </div>
     </div>
 </div>
+
+        <div class="col-sm-6">
+
+            <div class="panel panel-default">
+                 <div class="panel-body">
+                     <table class="table" id="status-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Actions</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% include 'insurance/partial_status_list.html' %}
+                            </tbody>
+                        </table>
+                 </div>
+            </div>
+        </div>
+                <div class="modal fade" id="modal-status">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      </div>
+    </div>
+</div>
+
+    </div>
+
+
+</div>
+
+
 
 {% endblock %}
