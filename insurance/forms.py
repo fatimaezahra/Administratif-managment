@@ -1,7 +1,7 @@
 from django import forms
 
 
-from insurance.models import Employee, Family, Relation, FileInsurance, Status
+from insurance.models import Employee, Family, Relation, FileInsurance, Status, Person
 
 
 class EmployeeForm(forms.ModelForm):
@@ -44,6 +44,7 @@ class StatusForm(forms.ModelForm):
 
 
 class FileInsuranceForm(forms.ModelForm):
+    Patients = forms.ModelMultipleChoiceField(queryset=None)
 
     class Meta:
         model = FileInsurance
@@ -54,7 +55,9 @@ class FileInsuranceForm(forms.ModelForm):
         self.fields['delivery_date'].widget.attrs.update({'class': 'datepicker form-control', 'onkeydown': 'return false'})
         self.fields['filing_date'].widget.attrs.update({'class': 'datepicker form-control', 'onkeydown': 'return false'})
         self.fields['Repayment_date'].widget.attrs.update({'class': 'datepicker form-control', 'onkeydown': 'return false'})
-        self.fields['Patient'].widget.attrs.update({'class': 'form-control'})
+        self.fields['Patients'].queryset = Person.objects.all()
+        self.fields['Patients'].widget.attrs.update({'class': 'form-control'})
+        self.fields['Patient'].widget = forms.HiddenInput()
         self.fields['amount'].widget.attrs.update({'class': 'form-control'})
         self.fields['status'].widget.attrs.update({'class': 'form-control'})
         self.fields['file_number'].widget.attrs.update({'class': 'form-control'})

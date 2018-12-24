@@ -25,11 +25,14 @@ class Employee(Person):
     service_number = models.CharField(max_length=30)
     phone = models.CharField(max_length=15)
     address = models.CharField(max_length=150)
-    employee_image = models.ImageField(upload_to='employee_image',
-                                       null=True,
-                                       blank=True)
+    employee_image = models.ImageField(upload_to='employee_image', null=True, blank=True)
     function = models.CharField(max_length=100)
     hiring_date = models.DateField()
+
+    def get_beneficients_persons(self):
+        persons = Person.objects.filter(id__in=self.family_set.values_list('id', flat=True) )
+        persons |= Person.objects.filter(pk=self.pk)
+        return persons
 
 
 class Relation(models.Model):
