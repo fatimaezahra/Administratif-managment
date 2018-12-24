@@ -14,6 +14,7 @@ $(document).ready(function () {
         $("#modal-change-password").modal("show");
     });
 
+
     var state = $('#insurance_state').prop('checked');
 
     $('.insurance_state').change(function () {

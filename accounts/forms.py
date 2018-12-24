@@ -20,8 +20,6 @@ class CustomUserCreationForm(UserCreationForm):
         self.fields['password2'].widget.attrs.update({'class': 'form-control'})
 
 
-
-
 class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
@@ -40,7 +38,6 @@ class CustomUserChangeForm(UserChangeForm):
         self.fields['last_name'].widget.attrs.update({'class': 'form-control'})
         self.fields['user_image'].widget.attrs.update({'class': 'form-control-file'})
         self.fields['email'].widget.attrs.update({'class': 'form-control'})
-
 
 
 class CustomUserChangeAdminForm(UserChangeForm):

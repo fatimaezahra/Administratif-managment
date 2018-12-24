@@ -24,7 +24,6 @@ class EmployeeForm(forms.ModelForm):
         self.fields['sex'].widget.attrs.update({'class': 'form-control'})
 
 
-
 class FamilyForm(forms.ModelForm):
     class Meta:
         model = Family

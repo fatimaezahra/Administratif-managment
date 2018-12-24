@@ -42,6 +42,7 @@ li > a{
 .login {
     float:left;
 	height:30px;
+    width: 30px;
 	margin-top:5px
 	}
 .logo {
@@ -88,4 +89,9 @@ label {
 }
 .card-title .top-text{
     padding-top:1em;
+}
+.img-emp a img{
+    height: 250px;
+    width: 250px;
+    padding: 1em 0 1em 0;
 }

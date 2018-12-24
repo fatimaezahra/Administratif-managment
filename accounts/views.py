@@ -84,14 +84,14 @@ def update_my_profile(request):
         else:
             messages.error(request, 'Please correct the error below.')
     password_form = PasswordChangeForm(request.user)
-    return render(request, 'accounts/update_my_profile.html', {'form': form, 'password_form' : password_form })
+    return render(request, 'accounts/update_my_profile.html', {'form': form, 'password_form': password_form})
 
 
 @login_required
 @admin_required
 def list_user(request):
     user_list = CustomUser.objects.all().exclude(id=request.user.id)
-    form = PasswordChangeForm(request.user)
+    form = AdminPasswordChangeForm(request.user)
 
     return render(request, 'accounts/user_list.html', {
         'users': user_list,
@@ -173,6 +173,7 @@ def admin_change_password(request, pk):
             return redirect('accounts:list_user')
         else:
             messages.error(request, 'Please correct the error below.')
+            return redirect('accounts:list_user')
     else:
         form = AdminPasswordChangeForm(user_change)
     return render(request, 'accounts/change_password.html', {

@@ -41,8 +41,8 @@ $(function () {
   };
 
 
-  $("#user-table").on("click", ".js-update-pw", loadForm);
-  $("#modal-user").on("submit", ".js-update-password", saveForm);
+  //$("#user-table").on("click", ".js-update-pw", loadForm);
+  //$("#modal-user").on("submit", ".js-update-password", saveForm);
 
   // Delete user
   $("#user-table").on("click", ".js-delete-user", loadForm);

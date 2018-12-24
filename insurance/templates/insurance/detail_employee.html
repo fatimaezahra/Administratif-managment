@@ -14,7 +14,7 @@
         <!-- Left Employee Info -->
         <div class="col-sm-4 col-md-3">
             <div class="panel panel-default">
-                <div class="panel-body">
+                <div class="img-emp">
                     <a href="{% url 'insurance:detail-employee' employee.id %}">
                         {% if employee.employee_image %}
                             <img src="{{ employee.employee_image.url }}" class="img-responsive">

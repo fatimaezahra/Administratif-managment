@@ -50,6 +50,7 @@ class Status(models.Model):
     def __str__(self):
         return self.status
 
+
 class FileInsurance(models.Model):
     collaborator = models.ForeignKey('Employee', on_delete=models.CASCADE, related_name='collaborator', blank=True, null=True)
     filing_date = models.DateField(blank=True)
