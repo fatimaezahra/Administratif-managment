@@ -59,18 +59,17 @@ $(document).ready(function () {
 
     })
 
-    $("#id_Patient").empty();
+    $("#id_Patients").empty();
     $('#id_collaborator').change(function () {
         var value = $(this).val();
         var name = $("#id_collaborator option:selected").text();;
         $.get("/insurance/collaborator-patient/" + value, function (data, status) {
-            var $el = $("#id_Patient");
+            var $el = $("#id_Patients");
             $el.empty(); // remove old options
             $.each(data, function (key, value) {
                 $el.append($("<option></option>")
                     .attr("value", value.key).text(value.value));
             });
-            $("#id_Patient").prepend("<option value='" + value + "' selected='selected'>" + name + "</option>");
         });
     })
 

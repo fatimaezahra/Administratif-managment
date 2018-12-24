@@ -278,6 +278,7 @@ def create(request):
 
     insurance = FileInsuranceForm(request.POST or None)
     if insurance.is_valid():
+        insurance.cleaned_data['Patient'] = insurance.cleaned_data['Patients']
         insurance.save()
         messages.info(request, 'insurance created successfully')
         return redirect("insurance:index")
@@ -353,7 +354,7 @@ def updateState(request, pk, pk_status):
 @login_required
 def collaboratorPatient(request, pk):
     employeeP = get_object_or_404(Employee, pk=pk)
-    patients = employeeP.family_set.all()
+    patients = employeeP.get_beneficients_persons()
     array = []
     for p in patients:
         array.append({'key': p.id, 'value': p.name})
