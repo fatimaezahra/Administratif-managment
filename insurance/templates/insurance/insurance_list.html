@@ -43,7 +43,7 @@
         <td>
             {% for status in all_status %}
             {%ifnotequal ins.status status%}
-            <a href="{% url 'insurance:update-state' ins.pk status.pk%}">{{status}}</a>
+            <a href="{% url 'insurance:update-state' ins.pk status.pk%}" class="status-hover">{{status}}</a>
             {% endifnotequal %}
             {% endfor %}
         </td>

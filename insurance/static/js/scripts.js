@@ -41,6 +41,8 @@ $(document).ready(function () {
         });
     });
 
+    $(".chosen").chosen();
+
     $('#checkMethod2').hide();
     $('#checkMethod2').prev().hide();
     $('#checkMethod2').prop("disabled", true);

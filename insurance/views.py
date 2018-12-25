@@ -278,8 +278,10 @@ def create(request):
 
     insurance = FileInsuranceForm(request.POST or None)
     if insurance.is_valid():
-        insurance.cleaned_data['Patient'] = insurance.cleaned_data['Patients']
         insurance.save()
+        insurance.instance.Patient = insurance.cleaned_data['Patients'].first()
+        insurance.instance.save()
+
         messages.info(request, 'insurance created successfully')
         return redirect("insurance:index")
     context = {
@@ -335,7 +337,9 @@ def update(request, pk):
 
     if request.method == 'POST':
         if form.is_valid():
-            insurance.save()
+            form.save()
+            form.instance.Patient = form.cleaned_data['Patients'].first()
+            form.instance.save()
             return redirect('insurance:index')
     else:
         form = FileInsuranceForm(instance=insurance)
@@ -357,5 +361,5 @@ def collaboratorPatient(request, pk):
     patients = employeeP.get_beneficients_persons()
     array = []
     for p in patients:
-        array.append({'key': p.id, 'value': p.name})
+        array.append({'key': p.id, 'value': "%s %s" %(p.first_name, p.name)})
     return JsonResponse(array, safe=False)

@@ -17,7 +17,7 @@
                     <h1>Add a New Insurance File</h1>
                     <form class="row" role="form" action="{% url 'insurance:create' %}" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                        {% include 'accounts/form_template.html' %}
+                        {% include 'insurance/create_file_insurance.html' %}
                         <div class="form-group col-md-12">
 
 <div class="row">

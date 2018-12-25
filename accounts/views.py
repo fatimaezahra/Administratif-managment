@@ -71,7 +71,7 @@ def update_my_profile(request):
         return redirect('insurance:list-employee')
     user = get_object_or_404(CustomUser, pk=request.user.id)
     print(user.password)
-    form = CustomUserChangeForm \
+    form = CustomUserChangeForm\
         (request.POST or None, request.FILES or None, instance=user)
     form.fields['username'].widget.attrs['readonly'] = True
     # form.fields['is_admin'].widget.attrs['disabled'] = True
@@ -83,7 +83,7 @@ def update_my_profile(request):
             return redirect('insurance:list-employee')
         else:
             messages.error(request, 'Please correct the error below.')
-    password_form = PasswordChangeForm(request.user)
+    password_form = AdminPasswordChangeForm(request.user)
     return render(request, 'accounts/update_my_profile.html', {'form': form, 'password_form': password_form})
 
 
@@ -145,6 +145,7 @@ def change_password(request):
         return redirect('accounts:update_my_profile')
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
+
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)

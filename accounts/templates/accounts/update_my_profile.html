@@ -11,7 +11,7 @@
                 <div class="card-title">
                 <div class="top-text">
 
-                <button data-url="{% url 'accounts:change_my_password' %}"  class="btn btn-default btn-xs js-update-pw">Change password maybe !?🤔🤔🤔</button>
+                <a href="{% url 'accounts:change_my_password' %}"  class="btn btn-default btn-xs">Change password maybe !?🤔🤔🤔</a>
                 </div>
 
                     {% if user.is_admin %}
@@ -44,43 +44,6 @@
 
 </div>
 
-<div class="modal fade" id="modal-change-password">
-    <div class="modal-dialog">
-      <div class="modal-content">
-<form method="post" action="" id="js-update-password">
-  {% csrf_token %}
-  <div class="modal-header">
-  <h4 class="modal-title">Change Password</h4>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
 
-  </div>
-  <div class="modal-body">
-    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-
-                        {% for field in password_form %}
-
-    <div class="col-md-6">
-        <div class="col-sm-offset-2 col-sm-10">
-            <span class="text-danger small">{{ field.errors }}</span>
-        </div>
-        <label class="control-label" for="song_title">{{ field.label_tag }}</label>
-        {{ field }}
-    </div>
-{% endfor %}
-
-
-                    </form>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    <button type="submit" class="btn btn-primary">Save changes</button>
-  </div>
- </div>
-  </form>
-</div>
-</div>
-</div>
 
 {% endblock %}

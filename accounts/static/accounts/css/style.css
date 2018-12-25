@@ -1,4 +1,8 @@
-
+:root {
+  --color-txt: #ededed;
+  --color-bg: #252525;
+  --color-accent: tomato;
+}
 @font-face {
   font-family: Deadfont;
   src: url("/static/font/Dead.ttf");
@@ -94,4 +98,64 @@ label {
     height: 250px;
     width: 250px;
     padding: 1em 0 1em 0;
+}
+.chosen-container{
+    font-size: 16px!important;
+}
+.chosen-container-single .chosen-single{
+    padding:5px 0 0 8px!important;
+    height: calc(2.25rem + 2px) !important;
+}
+.chosen-container-single .chosen-single div{
+    top:7px!important;
+}
+
+
+.status-hover {
+  /* remove default style */
+  text-decoration: none;
+  color: inherit;
+
+  font-weight: bold;
+  /* position relative to absolute position the pseudo-element(s) */
+  position: relative;
+}
+
+.status-hover:hover {
+  /* on hover change the color of the text, after a small period of time, to match with the vertical translation of the line */
+  transition: all 0.3s ease-out;
+  transition-delay: 0.3s;
+  color: var(--color-accent);
+}
+.status-hover:before {
+  /* create a line beneath the anchor link element */
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  height: 4px;
+  width: 100%;
+  background: #007bff;
+}
+
+.status-hover:hover:before {
+  /* on hover (on the anchor link element), add an animation to the line right beneath the anchor link */
+  animation: scannerAnimation 0.7s cubic-bezier(.35,-0.7,.56,1) forwards;
+}
+
+@keyframes scannerAnimation {
+  /* in the animation
+  change the vertical position of the pseudo-element
+  change the opacity when the animation starts to end
+  */
+  0% {
+    bottom: -3px;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    bottom: 100%;
+    opacity: 0;
+  }
 }
