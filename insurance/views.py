@@ -1,10 +1,7 @@
-import mimetypes
-
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.core.serializers import json
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template.loader import render_to_string
 
@@ -161,7 +158,7 @@ def list_relation(request):
     relations = Relation.objects.all()
     all_status = Status.objects.all()
     return render(request, 'insurance/list_relation.html', {
-        'relations': relations, "all_status":all_status
+        'relations': relations, "all_status": all_status
     })
 
 
@@ -197,6 +194,8 @@ def save_status_form(request, form, template_name):
     context = {'form': form}
     data['html_form_status'] = render_to_string(template_name, context, request=request)
     return JsonResponse(data)
+
+
 @login_required
 @admin_required
 def create_relation(request):
@@ -205,6 +204,7 @@ def create_relation(request):
     else:
         form = RelationForm()
     return save_relation_form(request, form, 'insurance/partial_relation_create.html')
+
 
 @login_required
 @admin_required
@@ -215,6 +215,7 @@ def create_status(request):
         form = StatusForm()
     return save_status_form(request, form, 'insurance/create_status.html')
 
+
 @login_required
 @admin_required
 def update_status(request, pk):
@@ -224,6 +225,7 @@ def update_status(request, pk):
     else:
         form = StatusForm(instance=status)
     return save_status_form(request, form, 'insurance/update_status.html')
+
 
 @login_required
 @admin_required
@@ -241,6 +243,7 @@ def delete_status(request, pk):
         context = {'status': status, }
         data['html_form_status'] = render_to_string('insurance/partial_status_delete.html', context, request=request, )
     return JsonResponse(data)
+
 
 @login_required
 @admin_required
@@ -350,7 +353,7 @@ def update(request, pk):
 def updateState(request, pk, pk_status):
     insurance = get_object_or_404(FileInsurance, pk=pk)
     status = get_object_or_404(Status, pk=pk_status)
-    insurance.status=status
+    insurance.status = status
     insurance.save(update_fields=["status"])
     return redirect('insurance:index')
 
@@ -361,5 +364,5 @@ def collaboratorPatient(request, pk):
     patients = employeeP.get_beneficients_persons()
     array = []
     for p in patients:
-        array.append({'key': p.id, 'value': "%s %s" %(p.first_name, p.name)})
+        array.append({'key': p.id, 'value': "%s %s" % (p.first_name, p.name)})
     return JsonResponse(array, safe=False)

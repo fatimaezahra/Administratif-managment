@@ -1,15 +1,17 @@
 from django.db import models
 
 STATUS_CHOICES = (
-    ('in_progres','In progress'),
-    ('finished','Finished'),
+    ('in_progres', 'In progress'),
+    ('finished', 'Finished'),
     ('refused', 'Refused'),
 )
 PAIEMENT_CHOICES = (
-    ('check','Check'),
-    ('devise','Devise'),
+    ('check', 'Check'),
+    ('devise', 'Devise'),
 
 )
+
+
 class Person(models.Model):
     name = models.CharField(max_length=50, blank=True)
     first_name = models.CharField(max_length=50)
@@ -30,7 +32,7 @@ class Employee(Person):
     hiring_date = models.DateField()
 
     def get_beneficients_persons(self):
-        persons = Person.objects.filter(id__in=self.family_set.values_list('id', flat=True) )
+        persons = Person.objects.filter(id__in=self.family_set.values_list('id', flat=True))
         persons |= Person.objects.filter(pk=self.pk)
         return persons
 
@@ -70,4 +72,3 @@ class FileInsurance(models.Model):
 
     def __str__(self):
         return str(self.pk)
-

@@ -1,5 +1,6 @@
 from django.contrib import messages
-from django.contrib.auth import logout, authenticate, login, update_session_auth_hash
+from django.contrib.auth import logout, authenticate, login,\
+    update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm, AdminPasswordChangeForm
 from django.http import JsonResponse
@@ -50,8 +51,6 @@ def register(request):
     if request.method == 'POST':
         if form.is_valid():
             user = form.save(commit=False)
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password1']
             user.save()
             if user is not None:
                 return redirect('accounts:list_user')
@@ -71,8 +70,7 @@ def update_my_profile(request):
         return redirect('insurance:list-employee')
     user = get_object_or_404(CustomUser, pk=request.user.id)
     print(user.password)
-    form = CustomUserChangeForm\
-        (request.POST or None, request.FILES or None, instance=user)
+    form = CustomUserChangeForm(request.POST or None, request.FILES or None, instance=user)
     form.fields['username'].widget.attrs['readonly'] = True
     # form.fields['is_admin'].widget.attrs['disabled'] = True
     # form.fields['is_admin'].widget.attrs['checked'] = True
@@ -169,7 +167,6 @@ def admin_change_password(request, pk):
     if request.method == 'POST':
         form = AdminPasswordChangeForm(user_change, request.POST)
         if form.is_valid():
-            user_save = form.save()
             messages.success(request, ' password was successfully updated!')
             return redirect('accounts:list_user')
         else:

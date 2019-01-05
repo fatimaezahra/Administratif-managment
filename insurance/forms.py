@@ -56,9 +56,9 @@ class FileInsuranceForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(FileInsuranceForm, self).__init__(*args, **kwargs)
-        self.fields['delivery_date'].widget.attrs.update({'class': 'datepicker form-control', 'onkeydown': 'return false', 'autocomplete':'off'})
-        self.fields['filing_date'].widget.attrs.update({'class': 'datepicker form-control', 'onkeydown': 'return false', 'autocomplete':'off'})
-        self.fields['Repayment_date'].widget.attrs.update({'class': 'datepicker form-control', 'onkeydown': 'return false', 'autocomplete':'off'})
+        self.fields['delivery_date'].widget.attrs.update({'class': 'datepicker form-control', 'onkeydown': 'return false', 'autocomplete': 'off'})
+        self.fields['filing_date'].widget.attrs.update({'class': 'datepicker form-control', 'onkeydown': 'return false', 'autocomplete': 'off'})
+        self.fields['Repayment_date'].widget.attrs.update({'class': 'datepicker form-control', 'onkeydown': 'return false', 'autocomplete': 'off'})
         self.fields['Patients'].queryset = Person.objects.all()
         self.fields['Patients'].widget.attrs.update({'class': 'form-control'})
         self.fields['Patient'].widget = forms.HiddenInput()
@@ -70,7 +70,3 @@ class FileInsuranceForm(forms.ModelForm):
         self.fields['regulation_number'].widget.attrs.update({'class': 'form-control'})
         self.fields['method_settlement'].widget.attrs.update({'class': 'form-control', 'id': 'checkMethod'})
         self.fields['check_number'].widget.attrs.update({'class': 'form-control', 'id': 'checkMethod2'})
-
-
-
-
