@@ -295,7 +295,7 @@ def index(request):
     insurances = FileInsurance.objects.all()
     all_status = Status.objects.all()
     page = request.GET.get('page', 1)
-    paginator = Paginator(insurances, 4)
+    paginator = Paginator(insurances, 8)
     try:
         insurances = paginator.page(page)
     except PageNotAnInteger:

@@ -58,31 +58,7 @@
 
  {% endfor %}
 
-<div>
-  {% if insurances.has_other_pages %}
-                      <ul class="pagination">
-                        {% if insurances.has_previous %}
-                          <li><a href="?page={{ insurances.previous_page_number }}">&laquo;</a></li>
-                        {% else %}
-                          <li class="disabled"><span>&laquo;</span></li>
-                        {% endif %}
 
-                        {% for i in insurances.paginator.page_range %}
-                          {% if insurances.number == i %}
-                            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-                          {% else %}
-                            <li><a href="?page={{ i }}">{{ i }}</a></li>
-                          {% endif %}
-                        {% endfor %}
-
-                        {% if insurances.has_next %}
-                          <li><a href="?page={{ insurances.next_page_number }}">&raquo;</a></li>
-                        {% else %}
-                          <li class="disabled"><span>&raquo;</span></li>
-                        {% endif %}
-                      </ul>
-                    {% endif %}
-</div>
 
 <div class="modal fade" id="modal-insurance">
     <div class="modal-dialog">
@@ -130,5 +106,15 @@
         </form>
       </div>
     </div>
+</div>
+
+<div>
+  {% if insurances.has_next %}
+                          <a href="?page={{ insurances.next_page_number }}">{{ insurances.next_page_number }}&raquo;</a>
+                        {% endif %}
+    {% if insurances.has_previous %}
+        <a href="?page={{ insurances.previous_page_number }}">&laquo;{{ insurances.previous_page_number }}</a>
+    {% endif %}
+
 </div>
 

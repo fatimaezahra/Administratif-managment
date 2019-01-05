@@ -56,10 +56,10 @@ class Status(models.Model):
 
 class FileInsurance(models.Model):
     collaborator = models.ForeignKey('Employee', on_delete=models.CASCADE, related_name='collaborator', blank=True, null=True)
-    filing_date = models.DateField(blank=True)
+    filing_date = models.DateField()
     amount = models.FloatField()
     delivery_date = models.DateField(blank=True, null=True)
-    status = models.ForeignKey('Status', on_delete=models.DO_NOTHING, blank=True, null=True)
+    status = models.ForeignKey('Status', on_delete=models.SET_NULL, blank=True, null=True)
     Patient = models.ForeignKey('Person', on_delete=models.CASCADE, related_name='patient', blank=True, null=True)
     file_number = models.IntegerField(default=1)
     Repayment_date = models.DateField(null=True, blank=True)
